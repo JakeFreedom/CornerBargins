@@ -1,0 +1,23 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    Layout = "_LoginLayout";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Login To Continue</h1>
+</div>
+
+<div class="row mt-5 pt-5">
+    <div class="col-md-12 text-center">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 text-center">
+        <input type="text" name="txtUserName" id="txtUserName" class="form-control" placeholder="enter user name" />
+        <input type="button" name="btnLogin" id="btnLogin" value="Login" class="btn btn-primary" />
+    </div>
+    <div class="col-md-3"></div>
+</div>
