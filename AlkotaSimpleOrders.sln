@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleOrders", "SimpleOrders\SimpleOrders.csproj", "{09DCFE6D-4365-442A-B2DD-5101FB661E5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleOrders", "SimpleOrders\SimpleOrders.csproj", "{09DCFE6D-4365-442A-B2DD-5101FB661E5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{2245AAEB-B1B2-43B7-83AA-937C90C5F2C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{2245AAEB-B1B2-43B7-83AA-937C90C5F2C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

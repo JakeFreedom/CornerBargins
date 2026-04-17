@@ -1,8 +1,76 @@
-﻿@page
+@page
 @model SimpleOrders.Pages.Parts.IndexModel
+@using System.Text
+<div id="PartsViewPort">
+   <input type="hidden" id="hidCartContentsQty" name="hidCartContents.Qty" value="@Model.CartedItems.Count.ToString()" />
+
 @{
+    if(Model.IsValidUser)
+    {
+            <h2 class="">Welcome, @Model.UserName</h2>
+
+            int cardCount = 0;
+            int itemCount = 0;
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<div class='row'>");
+            string src = string.Empty;
+            string hasImage = "none";
+
+            foreach(Core.Item i in Model.Items)
+            {
+                if (i.Image != null)
+                {
+                    
+                    string image = Convert.ToBase64String(i.GetResizedImage());
+                    //string src = string.Format("data:image/" + i.Extension + ";base64,{0}", image);
+                    src = string.Format("data:image/" + "png" + ";base64,{0}", image);
+                    if(src != null)
+                    { hasImage = "block"; }
+                }
+                sb.Append($"<div class='card border-secondary mb-4 m-2' style='max-width: 20rem;'><div class='card-header'><b>{i.Name}</b></div><div class='card-body'><h4 class='card-title'></h4><p class='card-text'>{i.Description}</p><p class='float-md-center' style='text-align:center;'><center><img src='{src}'  style='display:{hasImage}; text-align:center;' /></center></p></div>");
+                src = string.Empty;
+                hasImage = "none";
+                if (Model.CartedItems != null)
+                {
+                    if (Model.CartedItems.Exists(p=>p.ID == i.ID))
+                    {
+                        sb.Append($"<input class='btn btn-warning' type='button' value='Remove From Cart' name='btnRemoveFromCart{i.ID}' id='btnRemoveFromCart{i.ID}' onClick='RemoveFromCart({i.ID},1,{Model.UserID},`btnRemoveFromCart{i.ID}`);' ></input>");
+                    }
+                    else
+                    {
+                        sb.Append($"<input class='btn btn-success' type='button' value='Add To Cart' name='btnAddToCart{i.ID}' id='btnAddToCart{i.ID}' onClick='AddToCart({i.ID},1,{Model.UserID},`btnAddToCart{i.ID}`);' ></input>");
+                    }
+            }
+            else
+            {
+                sb.Append($"<input class='btn btn-success' type='button' value='Add To Cart' name='btnAddToCart{i.ID}' id='btnAddToCart{i.ID}' onClick='AddToCart({i.ID},1,{Model.UserID},`btnAddToCart{i.ID}`);' ></input>");
+            }
+
+            sb.Append("</div>");
+                @Html.Raw( sb.ToString())
+                sb.Clear();
+                cardCount++;
+                itemCount++;
+                if (cardCount == 3)
+                {
+                    sb.Clear();
+                    sb.Append("</div>");
+
+
+                    Html.Raw(sb.ToString());
+                    sb.Clear();
+                    cardCount = 0;
+                    //Check to see if we need another row or now.
+                    if (itemCount < Model.Items.Count)
+                    {
+                        sb.Append("<div class='row'>");
+                        Html.Raw(sb.ToString());
+                        sb.Clear();
+                    }
+                }
+            }
+
+        }
 }
-
-
-<h1>List Parts Out That Account Has Access TO</h1>
-<h2>Welcome, @Model.UserName</h2>
+</div>

@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
-
-namespace Core
+namespace Core.ENUMS
 {
-    public static class GlobalVars
+    public enum AccountStatus
     {
-
+        ACCOUNT_ACTIVE=1
     }
 }

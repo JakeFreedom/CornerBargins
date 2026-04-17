@@ -1,0 +1,32 @@
+﻿Shipping Address Form
+	This will save the shipping address and allow the user to select that address next time
+	Shipping AddressByAccount(Not User)
+	Allow the user to maintain shipping locations -- Only if asked for
+
+
+Still need images for items - Have some
+
+
+Get domain -- alkotapartsonline.com/.net -- DONE
+
+Main logo will be assigned when you sign in.
+	Logo By Account
+
+
+
+
+Add to Cart -- DONE
+View Cart -- DONE
+Check Out -- Form validation for shipping address Required fields of course -- DONE
+	Call back numer if needed
+	Email Address
+	Who placed the order
+	PO Number
+
+Get email constructed in a presentable way -- DONE
+
+
+User sign up -- Probably do some type of like that is only valid for a period of time.
+	Bring user to a form that will have First Last ComEdge account number
+		If account number doesn't exist currently, the account will be created and then user will be added to that account ???What products are linked????? 
+			This will all be down the road, no need to have this eloborate sign up system to launch.

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,7 +8,29 @@ namespace SimpleOrders.Pages.Base
     {
         public virtual void OnGet()
         {
-            //CheckForLogin()
+            CheckValidUser();
         }
+        
+        public void CheckValidUser()
+        {
+            //CheckForLogin()
+            System.Diagnostics.Debug.WriteLine(HttpContext.Request.GetDisplayUrl());
+            if (HttpContext.Session.Keys.Count() == 0)
+            {
+                //System.Diagnostics.Debug.WriteLine(HttpContext.Request.GetDisplayUrl());
+                HttpContext.Response.Redirect("https://localhost:7260/Index");
+            }
+            else
+            {
+                this.IsValidUser = true;
+                this.UserID = (int)HttpContext.Session.GetInt32("UserID");
+                this.UserName = HttpContext.Session.GetString("UserName");
+            }
+        }
+
+        public int UserID { get; protected set; }
+        public string UserName { get; protected set; }  
+        public bool IsValidUser { get; protected set; }
+        public int AccountID { get; protected set; }
     }
 }

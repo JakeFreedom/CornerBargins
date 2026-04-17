@@ -1,4 +1,13 @@
 ﻿@page
 @model SimpleOrders.Pages.Base.BasePageModelModel
 @{
+
+    if(!Model.IsValidUser)
+    {
+#if DEBUG
+        HttpContext.Response.Redirect("https://localhost:7260/Index");
+#else
+        HttpContext.Response.Redirect("https://www.alkotapartsonline.com");
+#endif
+    }
 }

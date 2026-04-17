@@ -14,6 +14,7 @@ function BuildLoginButton() {
         var token = $("input[name='__RequestVerificationToken']").val();
         //Get User Name
         var userName = $("#txtUserName").val()
+        var accountID = $("#txtAccountID").val()
 
         $.ajax(
             {
@@ -22,7 +23,8 @@ function BuildLoginButton() {
                 //url: "TagWriter/Index?handler=SaveTag",
                 url: "Index?handler=CheckLogin",
                 data: {
-                    strUserName:userName
+                    strUserName: userName,
+                    strAccountID: accountID
                 },
                 datatype: "text",
                 success: function (data) {

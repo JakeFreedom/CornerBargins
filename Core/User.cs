@@ -8,21 +8,27 @@ namespace Core
 {
     public class User
     {
-        public static bool CheckLogin(string UserName)
+        public static int CheckLogin(string strUserName, string strAccountID)
         {
             DataManager _dm = new DataManager();
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("@vcUserName", UserName);
+            parameters.Add("@vcUserName", strUserName);
+            parameters.Add("@vcCustomerID", strAccountID.ToString());
 
             _dm.GetDataProc("User_CheckLogin", parameters);
 
-            object[] v = _dm.DBData.Tables[0].Rows[0].ItemArray;
-            
-            if((int)v.GetValue(0) == 1)
-                return true;
-            else
-                return false;
+            try
+            {
+                object[] v = _dm.DBData.Tables[0].Rows[0].ItemArray;
+
+                if (Int32.Parse(v.GetValue(0).ToString()) > 0)
+                    return Int32.Parse(v.GetValue(0).ToString());
+                else
+                    return 0;
+            }
+            catch (Exception ex) { return 0; }
         }
     }
 }
+

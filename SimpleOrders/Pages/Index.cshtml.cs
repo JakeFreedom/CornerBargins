@@ -17,14 +17,32 @@ namespace SimpleOrders.Pages
         {
             if(HttpContext.Session.GetString("isLoggedIn") == "true")
                 Response.Redirect("/parts");   
+
         }
 
-        public void OnGetCheckLogin(string strUserName)
+        public void OnGetCheckLogin(string strUserName, string strAccountID)
         {
-            if (Core.User.CheckLogin(strUserName))
+            System.Diagnostics.Debug.WriteLine(strUserName);
+            int userID = Core.User.CheckLogin(strUserName, strAccountID);
+            if(userID != 0)
             {
                 HttpContext.Session.SetString("isLoggedIn", "true");
                 HttpContext.Session.SetString("UserName", strUserName);
+                HttpContext.Session.SetInt32("AccountID", Int32.Parse(strAccountID));//This isn't the index of the Account table, this is the users ComEdge Account ID
+                HttpContext.Session.SetInt32("UserID", userID);
+
+                //Get get cart if the user has one. -- If we do this, then we will need to have a system in place that when the order is submitted, that we
+                //Clear out the cart and the cartedItems, or in some fashion mark the cartedItems as completed.
+                int CartID = Cart.GetUserCart(userID, Int32.Parse(strAccountID));
+                if (CartID != -1)
+                {
+                    HttpContext.Session.SetInt32("CartID", CartID);
+                }
+                else
+                {
+                    CartID = Cart.Create(userID, Int32.Parse(strAccountID));
+                    HttpContext.Session.SetInt32("CartID", CartID);
+                }
             }
         }
     }
