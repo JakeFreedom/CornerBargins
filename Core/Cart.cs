@@ -38,8 +38,8 @@ namespace Core
                 foreach(DataRowView drv in dv)
                 {
                     //Iterate through the returned items
-                    Item i = new Item(Int32.Parse(drv["intItemID"].ToString()), drv["vcItemNumber"].ToString(), drv["vcItemDescription"].ToString(), Int32.Parse(drv["intQuantity"].ToString()));
-                    cartedItems.Add(i);
+                    //Item i = new Item(Int32.Parse(drv["intItemID"].ToString()), drv["vcItemNumber"].ToString(), drv["vcItemDescription"].ToString(), Int32.Parse(drv["intQuantity"].ToString()));
+                    //cartedItems.Add(i);
                 }
 
                 return cartedItems;

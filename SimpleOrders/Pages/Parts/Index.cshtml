@@ -22,7 +22,7 @@
 
         foreach(Core.Item i in Model.Items)
         {
-            if (i.Image != null)
+            if (i.Image != null && i.Image.Length > 0)
             {
 
                 string image = Convert.ToBase64String(i.GetResizedImage());
@@ -31,25 +31,15 @@
                 if(src != null)
                 { hasImage = "block"; }
             }
-            sb.Append($"<div class='card border-success mb-3 m-2' style='max-width: 20rem;'><div class='card-header'><b>{i.Name}</b></div><div class='card-body'><h4 class='card-title'></h4><p class='card-text'>{i.Description}</p><p class='float-md-center' style='text-align:center;'><center><img src='{src}'  style='display:{hasImage}; text-align:center;' /></center></p></div></div>");
+            sb.Append($"<div class='card border-success mb-3 m-2' style='max-width: 30rem;'><div class='card-header'><b>{i.Name}</b></div><div class='card-body'><h4 class='card-title'></h4><p class='card-text'>{i.Description}</p><p class='float-md-center' style='text-align:center;'><center><img src='{src}'  style='display:{hasImage}; text-align:center;' /></center></p></div></div>");
             src = string.Empty;
             hasImage = "none";
-            //     if (Model.CartedItems != null)
-            //     {
-            //         if (Model.CartedItems.Exists(p=>p.ID == i.ID))
-            //         {
-            //             sb.Append($"<input class='btn btn-warning' type='button' value='Remove From Cart' name='btnRemoveFromCart{i.ID}' id='btnRemoveFromCart{i.ID}' onClick='RemoveFromCart({i.ID},1,{Model.UserID},`btnRemoveFromCart{i.ID}`);' ></input>");
-            //         }
-            //         else
-            //         {
-            //             sb.Append($"<input class='btn btn-success' type='button' value='Add To Cart' name='btnAddToCart{i.ID}' id='btnAddToCart{i.ID}' onClick='AddToCart({i.ID},1,{Model.UserID},`btnAddToCart{i.ID}`);' ></input>");
-            //         }
-            // }
-            // else
-            // {
-            //     sb.Append($"<input class='btn btn-success' type='button' value='Add To Cart' name='btnAddToCart{i.ID}' id='btnAddToCart{i.ID}' onClick='AddToCart({i.ID},1,{Model.UserID},`btnAddToCart{i.ID}`);' ></input>");
-            // }
-            cardCount++;
+
+            //sb.Append($"<input class='btn btn-success' type='button' value='Add To Cart' name='btnAddToCart{i.ID}' id='btnAddToCart{i.ID}' onClick='AddToCart({i.ID},1,{Model.UserID},`btnAddToCart{i.ID}`);' ></input>");
+                @Html.Raw(sb.ToString())
+                ;
+                sb.Clear();
+                cardCount++;
             itemCount++;
             if (cardCount == 3)
             {
@@ -64,6 +54,6 @@
                 }
             }
         }
-        }
+    }
 }
 </div>

@@ -11,7 +11,7 @@ namespace SimpleOrders.Pages.Tools.AddItems
 
         }
 
-        public void OnPostUploadMedia(IFormFile _file, string itemName, string itemDescription, string itemLabelColor, string itemCost, string itemLink) {
+        public void OnPostUploadMedia(IFormFile _file, string itemName, string itemDescription, string itemLabelColor, decimal itemCost, string itemLink) {
             System.Diagnostics.Debug.WriteLine(itemName);
 
             MemoryStream ms = new MemoryStream();
@@ -20,6 +20,7 @@ namespace SimpleOrders.Pages.Tools.AddItems
             Image = string.Format("data:image/" + "png" + ";base64,{0}", base64String);
 
             //Save this to the DB 
+            Core.Item.AddItem(base64String, itemName, itemDescription, itemCost, itemLink, "green");
         }
 
 

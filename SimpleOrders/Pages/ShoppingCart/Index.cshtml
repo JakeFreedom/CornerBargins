@@ -3,69 +3,69 @@
 @using System.Text;
 
 @{
-        Layout = "_CartLayout";
-        if (Model.IsValidUser) //Always make sure we have a valid user
-        {
-            if (Model.CartedItems.Count == 0)
-            {
-                <div>Your Cart Is Empty</div>
-            }
-            else
-            {
-                <div class="alert-success collapse" id="divDisplayMessage">
-                    Cart was updated
-                </div>
-                <b>@Model.UserName<b>'s</b> Cart</b>
-                <div id="MainCartWindow">
-                    @foreach (Core.Item i in Model.CartedItems)
-                    {
-                        var quanBoxID = "intQuantity" + i.ID.ToString();
-                        <div class="" style="border:0px black solid;">
-                            <div class="row col-md-12 m-1 p-1" style="border:1px black solid;">
-                                <div class="col-md-3 ml-5 pl-5" style="border:0px black solid;">@i.Name</div>
-                                <div class="col-md-5" style="border:0px black solid;">@i.Description</div>
-                                <div class="col-md-3" style="border:solid black 0px;">
-                                    <label class="float-md-start form-control" style="text-align:center; width:45px; border:hidden;" for="intQuantity">Qty:</label>
-                                    <input type="button" class="btn btn-outline-primary float-md-end" id="btnCartRemove" name="btnCartRemove" value="Remove" onClick="UpdateQuantity(@i.ID,0, @Model.UserID, @Model.AccountID);" />
-                                    <input type="text" class="form-control float-md-start" style="width:75px;" placeholder="" id=@quanBoxID value="@i.Quantity"  onchange="UpdateQuantity(@i.ID, this.value, @Model.UserID, @Model.AccountID);" />
-                                </div>
-                            </div>
-                        </div>
-                    }
-                        <div class="row">
-                            <div class="col-md-12 align-content-center" style="text-align:center;">**To Update Quantity, type in new number(s) and click "Update"**</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 p-2 m-0" style="border:0px solid black; vertical-align:middle;">
-                                <input class="form-control  float-end" style="width:200px;" type="text" id="txtPONumber" name="txtPONumber" placeholder="Optional" />
-                                <label class="text-primary float-end p-1 m-1" style="font-size:20px;" >PO Number:</label>
-                                <input class="form-control" type="text" id="txtEmailAddress" name="txtEmailAddress" placeholder="email address" />
-                                <label style="font-size:12px;" class="text-info float-end">If you would like a copy of the order emailed to you, please enter a valid email address</label>
-                            </div>
-                            <div class="col-md-6 p-2 m-0" style="border:0px solid black; vertical-align:middle;">
-                                <textarea class="form-control  float-end" style="width:400px;" rows="5" cols="20" id="txtShiptoAddress" name="txtShiptoAddress" placeholder="required"></textarea>
-                                <label class="text-primary float-end p-1 m-1" style="font-size:20px;">Ship To Address:</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 p-2 m-0" style="vertical-align:middle;">
-                                <textarea class="form-control  float-end" style="width:400px;" rows="5" cols="20" id="txtComments" name="txtComments" placeholder="Optional"></textarea>
-                                <label class="text-primary float-end p-1 m-1" style="font-size:20px;">Comments:</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-md-12" style="text-align:right;">
-                            <input id="txtCustomerNumber" name="txtCustomerNumber" onkeyup="CustomerNumber_OnTextChange()"  type="text" class="form-control w-25 float-end p-1 m-1" placeholder="please enter customer number" />
-                            <input type="button" class="btn btn-success mt-1 pt-1" value="Update" id="" name="" style="width:150px;" />
-                            <input type="button" class="btn btn-success mt-1 pt-1 disabled" value="Place Order" id="btnPlaceOrder" name="btnPlaceOrder" style="width:150px;" />
-                        </div>
-                        </div>
-                </div>
-            }
-            <div id="divThanksForTheOrder" class="collapse">
-                <h1>Thank You!</h1>
-            </div>
-        }
+        // Layout = "_CartLayout";
+        // if (Model.IsValidUser) Always make sure we have a valid user
+        // {
+        //     if (Model.CartedItems.Count == 0)
+        //     {
+        //         <div>Your Cart Is Empty</div>
+        //     }
+        //     else
+        //     {
+        //         <div class="alert-success collapse" id="divDisplayMessage">
+        //             Cart was updated
+        //         </div>
+        //         <b>@Model.UserName<b>'s</b> Cart</b>
+        //         <div id="MainCartWindow">
+        //             @foreach (Core.Item i in Model.CartedItems)
+        //             {
+        //                 var quanBoxID = "intQuantity" + i.ID.ToString();
+        //                 <div class="" style="border:0px black solid;">
+        //                     <div class="row col-md-12 m-1 p-1" style="border:1px black solid;">
+        //                         <div class="col-md-3 ml-5 pl-5" style="border:0px black solid;">@i.Name</div>
+        //                         <div class="col-md-5" style="border:0px black solid;">@i.Description</div>
+        //                         <div class="col-md-3" style="border:solid black 0px;">
+        //                             <label class="float-md-start form-control" style="text-align:center; width:45px; border:hidden;" for="intQuantity">Qty:</label>
+        //                             <input type="button" class="btn btn-outline-primary float-md-end" id="btnCartRemove" name="btnCartRemove" value="Remove" onClick="UpdateQuantity(@i.ID,0, @Model.UserID, @Model.AccountID);" />
+        //                             <input type="text" class="form-control float-md-start" style="width:75px;" placeholder="" id=@quanBoxID value="@i.Quantity"  onchange="UpdateQuantity(@i.ID, this.value, @Model.UserID, @Model.AccountID);" />
+        //                         </div>
+        //                     </div>
+        //                 </div>
+        //             }
+        //                 <div class="row">
+        //                     <div class="col-md-12 align-content-center" style="text-align:center;">**To Update Quantity, type in new number(s) and click "Update"**</div>
+        //                 </div>
+        //                 <div class="row">
+        //                     <div class="col-md-6 p-2 m-0" style="border:0px solid black; vertical-align:middle;">
+        //                         <input class="form-control  float-end" style="width:200px;" type="text" id="txtPONumber" name="txtPONumber" placeholder="Optional" />
+        //                         <label class="text-primary float-end p-1 m-1" style="font-size:20px;" >PO Number:</label>
+        //                         <input class="form-control" type="text" id="txtEmailAddress" name="txtEmailAddress" placeholder="email address" />
+        //                         <label style="font-size:12px;" class="text-info float-end">If you would like a copy of the order emailed to you, please enter a valid email address</label>
+        //                     </div>
+        //                     <div class="col-md-6 p-2 m-0" style="border:0px solid black; vertical-align:middle;">
+        //                         <textarea class="form-control  float-end" style="width:400px;" rows="5" cols="20" id="txtShiptoAddress" name="txtShiptoAddress" placeholder="required"></textarea>
+        //                         <label class="text-primary float-end p-1 m-1" style="font-size:20px;">Ship To Address:</label>
+        //                     </div>
+        //                 </div>
+        //                 <div class="row">
+        //                     <div class="col-md-12 p-2 m-0" style="vertical-align:middle;">
+        //                         <textarea class="form-control  float-end" style="width:400px;" rows="5" cols="20" id="txtComments" name="txtComments" placeholder="Optional"></textarea>
+        //                         <label class="text-primary float-end p-1 m-1" style="font-size:20px;">Comments:</label>
+        //                     </div>
+        //                 </div>
+        //                 <div class="row">
+        //                 <div class="col-md-12" style="text-align:right;">
+        //                     <input id="txtCustomerNumber" name="txtCustomerNumber" onkeyup="CustomerNumber_OnTextChange()"  type="text" class="form-control w-25 float-end p-1 m-1" placeholder="please enter customer number" />
+        //                     <input type="button" class="btn btn-success mt-1 pt-1" value="Update" id="" name="" style="width:150px;" />
+        //                     <input type="button" class="btn btn-success mt-1 pt-1 disabled" value="Place Order" id="btnPlaceOrder" name="btnPlaceOrder" style="width:150px;" />
+        //                 </div>
+        //                 </div>
+        //         </div>
+        //     }
+        //     <div id="divThanksForTheOrder" class="collapse">
+        //         <h1>Thank You!</h1>
+        //     </div>
+        //}
     }
 
 

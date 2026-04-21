@@ -75,8 +75,23 @@ namespace Core
         }
 
         public Boolean GetDataProc(string DBProc) {
+            CreateCommand(DBProc, DBParameters);
+            SqlDataAdapter da = new SqlDataAdapter(DBCmd);
 
-            return false;
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            try
+            {
+                DBConn.Open();
+                RowsAffected = da.Fill(ds);
+                DBData = ds;
+                DBConn.Close();
+                return true;
+            }
+            catch (SqlException error)
+            {
+                return false;
+            }
         }
 
 

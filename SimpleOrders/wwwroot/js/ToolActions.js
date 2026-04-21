@@ -45,9 +45,9 @@ function UploadImage() {
             processData: false,
             success: function (data) {
                 //alert("success");
-                var image = $(data).find("#uploadedImage");
-                console.log(data);
-                $("#uploadedImage").replaceWith(image);
+                //var image = $(data).find("#uploadedImage");
+                //console.log(data);
+                //$("#uploadedImage").replaceWith(image);
                 $("#mdlAddItem").modal('hide');
             }
         });

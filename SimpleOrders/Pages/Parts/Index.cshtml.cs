@@ -27,7 +27,7 @@ namespace SimpleOrders.Pages.Parts
             //    return;
             //}
 
-            this.CartedItems = new List<Item>();
+           // this.CartedItems = new List<Item>();
 
         }
 
@@ -37,7 +37,9 @@ namespace SimpleOrders.Pages.Parts
             //{
                 //System.Diagnostics.Debug.WriteLine("Loading Products");
                 //Get account id and pass that into the product select stored proc
+
                 this.Items = Item.GetItems(Int32.Parse("1"));
+
                 //if (_items != null)
                 //    Items = _items;
                 //else
@@ -48,65 +50,65 @@ namespace SimpleOrders.Pages.Parts
 
         public void OnPostRemoveFromCart(int ItemID, int AccountID, int UserID)
         {
-            int _cartID = 0;
-            //System.Diagnostics.Debug.WriteLine($"Item ID{intItemID} AccountID:{intAccountID}");
-            //Check to see if we have a cart
-            if (HttpContext.Session.GetInt32("CartID") != null)
-            {
-                _cartID = Int32.Parse(HttpContext.Session.GetInt32("CartID").ToString());
-                //We don't need to load up the cart, just need to keep track of the ID so we know what
-                //data we need to pass to the add cart method
-                Cart userCart = new Cart(_cartID);
+            //int _cartID = 0;
+            ////System.Diagnostics.Debug.WriteLine($"Item ID{intItemID} AccountID:{intAccountID}");
+            ////Check to see if we have a cart
+            //if (HttpContext.Session.GetInt32("CartID") != null)
+            //{
+            //    _cartID = Int32.Parse(HttpContext.Session.GetInt32("CartID").ToString());
+            //    //We don't need to load up the cart, just need to keep track of the ID so we know what
+            //    //data we need to pass to the add cart method
+            //    Cart userCart = new Cart(_cartID);
 
-                if (!userCart.AddToCart( ItemID, 0))
-                    HttpContext.Abort();
+            //    if (!userCart.AddToCart( ItemID, 0))
+            //        HttpContext.Abort();
 
 
-                OnGet();
+            //    OnGet();
 
-            }
+            //}
         }
 
         public void OnGetGetCartContents()
         {
-            System.Diagnostics.Debug.WriteLine("getting cart contents");
-            if (HttpContext.Session.GetInt32("CartID") != null)
-            {
-                this.CartedItems =  Cart.GetCartedItems((int)HttpContext.Session.GetInt32("UserID"),(int)HttpContext.Session.GetInt32("CartID"));
-                //We don't need to load up the cart, just need to keep track of the ID so we know what
-                //data we need to pass to the add cart method
+            //System.Diagnostics.Debug.WriteLine("getting cart contents");
+            //if (HttpContext.Session.GetInt32("CartID") != null)
+            //{
+            //    this.CartedItems =  Cart.GetCartedItems((int)HttpContext.Session.GetInt32("UserID"),(int)HttpContext.Session.GetInt32("CartID"));
+            //    //We don't need to load up the cart, just need to keep track of the ID so we know what
+            //    //data we need to pass to the add cart method
 
-                OnGet();
+            //    OnGet();
 
-            }
+            //}
         }
         public void OnPostAddToCart(int ItemID, int AccountID, int UserID)
         {
-            int _cartID = 0;
-            //System.Diagnostics.Debug.WriteLine($"Item ID{intItemID} AccountID:{intAccountID}");
-            //Check to see if we have a cart
-            if (HttpContext.Session.GetInt32("CartID") != null)
-            {
-                _cartID = Int32.Parse(HttpContext.Session.GetInt32("CartID").ToString());
-                //We don't need to load up the cart, just need to keep track of the ID so we know what
-                //data we need to pass to the add cart method
-                Cart userCart = new Cart(_cartID);
-                if (!userCart.AddToCart(ItemID, 1))
-                    HttpContext.Abort();
-            }
-            else
-            {
-                //If we don't have a cart yet, we just need to pass in the account ID and the item
-                //And let our back end create the cart iD from us, then we can just shove that into session on the way back down
-                _cartID = Cart.Create(ItemID, AccountID, UserID); //This will return the cart id.
-                if (_cartID != 0)
-                    HttpContext.Session.SetInt32("CartID", _cartID);
-            }
+            //int _cartID = 0;
+            ////System.Diagnostics.Debug.WriteLine($"Item ID{intItemID} AccountID:{intAccountID}");
+            ////Check to see if we have a cart
+            //if (HttpContext.Session.GetInt32("CartID") != null)
+            //{
+            //    _cartID = Int32.Parse(HttpContext.Session.GetInt32("CartID").ToString());
+            //    //We don't need to load up the cart, just need to keep track of the ID so we know what
+            //    //data we need to pass to the add cart method
+            //    Cart userCart = new Cart(_cartID);
+            //    if (!userCart.AddToCart(ItemID, 1))
+            //        HttpContext.Abort();
+            //}
+            //else
+            //{
+            //    //If we don't have a cart yet, we just need to pass in the account ID and the item
+            //    //And let our back end create the cart iD from us, then we can just shove that into session on the way back down
+            //    _cartID = Cart.Create(ItemID, AccountID, UserID); //This will return the cart id.
+            //    if (_cartID != 0)
+            //        HttpContext.Session.SetInt32("CartID", _cartID);
+            //}
 
-            //LoadProducts();
-            //if(_cartID > 0) //Just make sure we have a valid cart ID
-            //  GetProductsInCart(UserID, _cartID);
-            OnGet();
+            ////LoadProducts();
+            ////if(_cartID > 0) //Just make sure we have a valid cart ID
+            ////  GetProductsInCart(UserID, _cartID);
+            //OnGet();
         }
 
 
