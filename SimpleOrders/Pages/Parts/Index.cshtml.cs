@@ -15,34 +15,34 @@ namespace SimpleOrders.Pages.Parts
 
          void GetProductsInCart(int UserID, int cartID)
         {
-            if(UserID>0 && cartID>0)
-            {
-                this.CartedItems = Cart.GetCartedItems(UserID, cartID);
-                return;
-            }
+            //if (UserID > 0 && cartID > 0)
+            //{
+            //    this.CartedItems = Cart.GetCartedItems(UserID, cartID);
+            //    return;
+            //}
 
-            if(HttpContext.Session.GetInt32("CartID") != null)
-            {
-                this.CartedItems = Cart.GetCartedItems((int)HttpContext.Session.GetInt32("UserID"), (int)HttpContext.Session.GetInt32("CartID"));
-                return;
-            }
+            //if (HttpContext.Session.GetInt32("CartID") != null)
+            //{
+            //    this.CartedItems = Cart.GetCartedItems((int)HttpContext.Session.GetInt32("UserID"), (int)HttpContext.Session.GetInt32("CartID"));
+            //    return;
+            //}
 
             this.CartedItems = new List<Item>();
-            
+
         }
 
         void LoadProducts()
         {
-            if (HttpContext.Session.GetInt32("AccountID") != null)
-            {
+            //if (HttpContext.Session.GetInt32("AccountID") != null)
+            //{
                 //System.Diagnostics.Debug.WriteLine("Loading Products");
                 //Get account id and pass that into the product select stored proc
-                this.Items = Item.GetItems(Int32.Parse(HttpContext.Session.GetInt32("AccountID").ToString()));
+                this.Items = Item.GetItems(Int32.Parse("1"));
                 //if (_items != null)
                 //    Items = _items;
                 //else
                 //    Items = new List<Item>();
-            }
+            //}
         }
 
 
@@ -103,7 +103,7 @@ namespace SimpleOrders.Pages.Parts
                     HttpContext.Session.SetInt32("CartID", _cartID);
             }
 
-            LoadProducts();
+            //LoadProducts();
             //if(_cartID > 0) //Just make sure we have a valid cart ID
             //  GetProductsInCart(UserID, _cartID);
             OnGet();

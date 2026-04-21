@@ -12,7 +12,10 @@
     @Html.AntiForgeryToken()
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="border: solid 1px red;">
+        <div>
+            <img src="~/images/cblogo-1.png" style="height:128px;" />
+        </div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
