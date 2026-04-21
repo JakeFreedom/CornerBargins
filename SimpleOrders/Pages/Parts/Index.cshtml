@@ -7,8 +7,11 @@
     @{
         // if(Model.IsValidUser)
         // {
-        // <h2 class="">Welcome, @Model.UserName</h2>
+        // <h2 class="">Welcome, @Model.UserName</h2>a
 
+
+        if(Model.Items != null || Model.Items.Count > 0)
+        {
         int cardCount = 0;
         int itemCount = 0;
 
@@ -60,6 +63,7 @@
                     sb.Append("<div class='row'><div class='col-md-3'></div>");
                 }
             }
+        }
         }
 }
 </div>

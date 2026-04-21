@@ -178,3 +178,4 @@ function CustomerNumber_OnTextChange() {
         $("#btnPlaceOrder").addClass("disabled");
     }
 }
+
