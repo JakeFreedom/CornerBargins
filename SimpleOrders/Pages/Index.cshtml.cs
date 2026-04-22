@@ -16,7 +16,7 @@ namespace SimpleOrders.Pages
         public override void OnGet()
         {
             //if(HttpContext.Session.GetString("isLoggedIn") == "true")
-            Response.Redirect("/parts");   
+            Response.Redirect("/Items");   
 
         }
 

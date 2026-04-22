@@ -26,7 +26,7 @@ namespace Core
 
         }
 
-        public Item(int ID, string Name, string Description, string Cost, string Link, string LabelColor, string Image)
+        public Item(int ID, string Name, string Description, string Cost, string Link, int Status, string Image, DateTime LastUpdated)
         {
             this.ID = ID;
             this.Name = Name;
@@ -34,6 +34,8 @@ namespace Core
             this.Cost = Cost;
             this.Link = Link;
             this.Image = Image;
+            this.Status = Status;
+            this.Updated = LastUpdated;
         }
 
         //Get all items a user has access to.
@@ -52,7 +54,8 @@ namespace Core
                 foreach(DataRowView drv in dv)
                 {
                     Item i = new Item(Int32.Parse(drv["intID"].ToString()), drv["vcName"].ToString(), drv["vcDescription"].ToString(), 
-                        decimal.Parse(drv["decCost"].ToString()).ToString(), drv["vcExternalLink"].ToString(), "green", drv["binImage"].ToString());
+                        decimal.Parse(drv["decCost"].ToString()).ToString(), drv["vcExternalLink"].ToString(), Int32.Parse(drv["intStatus"].ToString()), drv["binImage"].ToString(),
+                        DateTime.Parse(drv["dtUpdated"].ToString()));
 
                     returnList.Add(i);
                 }
@@ -100,7 +103,7 @@ namespace Core
 
             if (_height > _width)
             {
-                while (_height * res > 300)
+                while (_height * res > 275)
                 {
                     decimal value = (decimal)_height * res;
                     _height = (int)value;
@@ -111,7 +114,7 @@ namespace Core
             }
             else
             {
-                while (_width * res > 300)
+                while (_width * res > 275)
                 {
                     decimal value = (decimal)_width * res -1;
                     _width = (int)value;

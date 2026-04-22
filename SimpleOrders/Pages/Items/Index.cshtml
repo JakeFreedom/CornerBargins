@@ -1,0 +1,80 @@
+@page
+@model SimpleOrders.Pages.Items.IndexModel
+@using System.Text
+
+<div id="PartsViewPort" class="text-center">
+   @* <input type="hidden" id="hidCartContentsQty" name="hidCartContents.Qty" value="@Model.CartedItems.Count.ToString()" /> *@
+
+    @{
+        // if(Model.IsValidUser)
+        // {
+        // <h2 class="">Welcome, @Model.UserName</h2>a
+
+
+        if(Model.Items != null || Model.Items.Count > 0)
+        {
+            int cardCount = 0;
+            int itemCount = 0;
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<div class='row'><div class='col-md-2'></div>");
+            string src = string.Empty;
+            string hasImage = "none";
+            string colorCode = "#77b300";
+            foreach(Core.Item i in Model.Items)
+            {
+                if (i.Image != null && i.Image.Length > 0)
+                {
+
+                    string image = Convert.ToBase64String(i.GetResizedImage());
+                    //string src = string.Format("data:image/" + i.Extension + ";base64,{0}", image);
+                    src = string.Format("data:image/" + "png" + ";base64,{0}", image);
+                    if(src != null)
+                    { hasImage = "block"; }
+                }
+                else
+                {
+                    src = "images/CB-ImageComingSoonx300.png";
+                    hasImage = "block";
+                }
+                // if(i.Status == 1)
+                // {
+                //     colorCode = "#c43535";
+                // }
+                // if(i.Status == 2)
+                // {
+                //     colorCode = "#ffcc00";
+                // }
+                // if(i.Status == 3)
+                // {
+                //     colorCode = "#77b300";
+                // }
+                sb.Append($"<div class='card border-primary mb-3 m-2' style='max-width: 25rem;'><div class='card-header bg-primary'><b style=color:white;>{i.Name}</b></div><div class='card-body'><h4 class='card-title'></h4><p class='card-text'>{i.Description}</p><p class='float-md-center' style='text-align:center;'><center><img src='{src}'  style='display:{hasImage}; text-align:center; border-radius:5%;' /></center></p></div><div><label class='text-success'>${i.Cost.ToString()}/OBO</label></div><div>Last Updated:{i.Updated.ToShortDateString()}</div></div>");
+            src = string.Empty;
+            hasImage = "none";
+
+            //sb.Append($"<input class='btn btn-success' type='button' value='Add To Cart' name='btnAddToCart{i.ID}' id='btnAddToCart{i.ID}' onClick='AddToCart({i.ID},1,{Model.UserID},`btnAddToCart{i.ID}`);' ></input>");
+                @Html.Raw(sb.ToString())
+                ;
+                sb.Clear();
+                cardCount++;
+            itemCount++;
+            if (cardCount == 3)
+            {
+                sb.Append("</div>");
+                @Html.Raw(sb.ToString());
+                sb.Clear();
+                cardCount = 0;
+                //Check to see if we need another row or now.
+                if (itemCount < Model.Items.Count)
+                {
+                    sb.Append("<div class='row'><div class='col-md-2'></div>");
+                }
+            }
+        }
+    }
+}
+
+
+</div>
+

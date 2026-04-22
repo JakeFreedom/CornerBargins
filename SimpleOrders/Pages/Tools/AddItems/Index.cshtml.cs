@@ -12,15 +12,16 @@ namespace SimpleOrders.Pages.Tools.AddItems
         }
 
         public void OnPostUploadMedia(IFormFile _file, string itemName, string itemDescription, string itemLabelColor, decimal itemCost, string itemLink) {
-            System.Diagnostics.Debug.WriteLine(itemName);
-
+            //System.Diagnostics.Debug.WriteLine(itemName);
+            itemDescription = itemDescription.Replace("\r\n", "<br />");
             MemoryStream ms = new MemoryStream();
-            _file.CopyToAsync(ms);
+            _file.CopyTo(ms);
             string base64String = Convert.ToBase64String(ms.ToArray());
             Image = string.Format("data:image/" + "png" + ";base64,{0}", base64String);
 
             //Save this to the DB 
             Core.Item.AddItem(base64String, itemName, itemDescription, itemCost, itemLink, "green");
+                
         }
 
 

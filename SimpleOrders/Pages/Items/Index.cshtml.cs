@@ -1,7 +1,7 @@
 using Core;
 using SimpleOrders.Pages.Base;
 
-namespace SimpleOrders.Pages.Parts
+namespace SimpleOrders.Pages.Items
 {
     public class IndexModel : BasePageModelModel
     {
