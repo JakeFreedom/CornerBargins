@@ -11,6 +11,8 @@
     <h1>Welcome to the tools</h1>
 
     <input type="button" value="Add Item" onclick="ShowAddItemModal()" />
+
+    @*Add Item Modal*@
     <div class="modal-additem fade" role="dialog" id="mdlAddItem" tabindex="-1" aria-hidden="true" aria-labelledby="mdlAddItem" style="width:100%;">
         <div class="modal-dialog modal-md" style="color:black; border-color:orange;">
             <div class="modal-content pl-3 pr-3" style="height:100%; border:0px;">
@@ -30,7 +32,7 @@
                         <div class="col-md-6">
                             <div>
                                 <label class="col-form-label mt-2" for="txtItemName">Item Name</label>
-                                <input type="text" class="form-control" placeholder="" id="txtItemName">
+                                <input type="text" class="form-control" placeholder="" id="txtItemName" required>
                             </div>
                             <div>
                                 <label class="col-form-label mt-2" for="txtItemCost">Item Cost</label>
@@ -63,9 +65,12 @@
     </div>
 
 
-    <img src="@Model.Image" id="uploadedImage" />
+    @*<img src="@Model.Image" id="uploadedImage" />*@
 
 </div>
+
+
+
 @section Scripts {
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

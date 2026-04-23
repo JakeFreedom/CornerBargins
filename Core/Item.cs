@@ -87,7 +87,6 @@ namespace Core
         private bool ThumbnailCallback() { return false; }
         public byte[] GetResizedImage()
         {
-    
             //Image thumb = i.GetThumbnailImage(128, 128, null, IntPtr.Zero);
             //thumb.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
 
