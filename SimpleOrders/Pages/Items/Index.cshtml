@@ -17,7 +17,7 @@
             int itemCount = 0;
 
             StringBuilder sb = new StringBuilder();
-            sb.Append("<div class='row'><div class='col-md-2'></div>");
+            sb.Append("<div class='row' style='border:solid 0px green;'>");
             string src = string.Empty;
             string hasImage = "none";
             string colorCode = "#77b300";
@@ -34,7 +34,7 @@
                 }
                 else
                 {
-                    src = "images/CB-ImageComingSoonx300.png";
+                    src = "images/ImageComingSoon300x.png";
                     hasImage = "block";
                 }
                 // if(i.Status == 1)
@@ -49,28 +49,25 @@
                 // {
                 //     colorCode = "#77b300";
                 // }
-                sb.Append($"<div class='card border-primary mb-3 m-2' style='max-width: 25rem;'><div class='card-header bg-primary'><b style=color:white;>{i.Name}</b></div><div class='card-body'><h4 class='card-title'></h4><p class='card-text'>{i.Description}</p><p class='float-md-center' style='text-align:center;'><center><img src='{src}'  style='display:{hasImage}; text-align:center; border-radius:5%;' /></center></p></div><div><label class='text-success'>${i.Cost.ToString()}/OBO</label></div><div>Last Updated:{i.Updated.ToShortDateString()}</div></div>");
-            src = string.Empty;
-            hasImage = "none";
-
-            //sb.Append($"<input class='btn btn-success' type='button' value='Add To Cart' name='btnAddToCart{i.ID}' id='btnAddToCart{i.ID}' onClick='AddToCart({i.ID},1,{Model.UserID},`btnAddToCart{i.ID}`);' ></input>");
-                @Html.Raw(sb.ToString())
-                ;
-                sb.Clear();
-                cardCount++;
-            itemCount++;
-            if (cardCount == 3)
-            {
-                sb.Append("</div>");
+                sb.Append($"<div class='col-md-4 card border-primary mb-3 m-4 pb-1' style='max-width: 25rem;'><div class='card-header bg-primary'><b style=color:white;>{i.Name}</b></div><div class='card-body'><h4 class='card-title'></h4><p class='card-text'>{i.Description}</p><p class='float-md-center' style='text-align:center;'><center><img src='{src}'  style='display:{hasImage}; text-align:center; border-radius:5%;' /></center></p></div><div><label class='text-success'>${i.Cost.ToString()}/OBO</label></div><div>Last Updated:{i.Updated.ToShortDateString()}</div><div><input type='button' class='btn btn-success' style='width:100%;' name='Reserve' value='Reserve This' /></div></div>");
+                src = string.Empty;
+                hasImage = "none";
                 @Html.Raw(sb.ToString());
                 sb.Clear();
-                cardCount = 0;
-                //Check to see if we need another row or now.
-                if (itemCount < Model.Items.Count)
+                cardCount++;
+                itemCount++;
+                if (cardCount == 3)
                 {
-                    sb.Append("<div class='row'><div class='col-md-2'></div>");
+                    sb.Append("</div>");
+                    @Html.Raw(sb.ToString());
+                    sb.Clear();
+                    cardCount = 0;
+                    //Check to see if we need another row or now.
+                    if (itemCount < Model.Items.Count)
+                    {
+                        sb.Append("<div class='row'>");
+                    }
                 }
-            }
         }
     }
 }
