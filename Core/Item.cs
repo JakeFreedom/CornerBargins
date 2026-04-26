@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 
 using System.ComponentModel;
+using Microsoft.Data.SqlClient;
+using System.Reflection;
 
 
 namespace Core
@@ -26,7 +28,7 @@ namespace Core
 
         }
 
-        public Item(int ID, string Name, string Description, string Cost, string Link, int Status, string Image, DateTime LastUpdated)
+        public Item(int ID, string Name, string Description, string Cost, string Link, int Status, byte[] Image, DateTime LastUpdated)
         {
             this.ID = ID;
             this.Name = Name;
@@ -39,7 +41,7 @@ namespace Core
         }
 
         //Get all items a user has access to.
-        public static List<Item> GetItems(int accountID)
+        public static List<Item> GetItems()
         {
             List<Item> returnList = new List<Item>();
             DataManager dm = new DataManager();
@@ -53,8 +55,8 @@ namespace Core
                 DataView dv = new DataView(dt);
                 foreach(DataRowView drv in dv)
                 {
-                    Item i = new Item(Int32.Parse(drv["intID"].ToString()), drv["vcName"].ToString(), drv["vcDescription"].ToString(), 
-                        decimal.Parse(drv["decCost"].ToString()).ToString(), drv["vcExternalLink"].ToString(), Int32.Parse(drv["intStatus"].ToString()), drv["binImage"].ToString(),
+                    Item i = new Item(Int32.Parse(drv["intID"].ToString()), drv["vcName"].ToString(), drv["vcDescription"].ToString(),
+                        decimal.Parse(drv["decCost"].ToString()).ToString(), drv["vcExternalLink"].ToString(), Int32.Parse(drv["intStatus"].ToString()), (byte[])drv["binImage"],
                         DateTime.Parse(drv["dtUpdated"].ToString()));
 
                     returnList.Add(i);
@@ -70,18 +72,27 @@ namespace Core
         }
 
 
-        public static int AddItem(string image, string name, string description, decimal cost, string link, string labelColor)
+        public static int AddItem(byte[] image, string name, string description, decimal cost, string link, string labelColor)
         {
-            DataManager dm = new DataManager();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("binImage", image.ToString());
-            parameters.Add("vcName", name);
-            parameters.Add("vcDescription", description);
-            parameters.Add("intStatus", "1");
-            parameters.Add("decCost", cost.ToString());
-            parameters.Add("vcExternalLink", link);
+           
+            //var currentMethod = MethodBase.GetCurrentMethod();
+            //var par = currentMethod.GetParameters();
+            //foreach (var param in par)
+            //{
+            //    System.Diagnostics.Debug.WriteLine(param.ToString());
+            //}
 
-            return dm.InsertDataProc<int>("Item_I", parameters);
+            DataManager dm = new DataManager();
+            List<SqlParameter> sp = new List<SqlParameter>();
+
+            sp.Add(new SqlParameter("binImage", image));
+            sp.Add(new SqlParameter("vcName", name));
+            sp.Add(new SqlParameter("vcDescription", description));
+            sp.Add(new SqlParameter("intStatus", 1));
+            sp.Add(new SqlParameter("decCost", cost));
+            sp.Add(new SqlParameter("vcExternalLink", link));
+
+            return dm.InsertDataProc<int>("Item_I", sp);
         }
 
         private bool ThumbnailCallback() { return false; }
@@ -91,7 +102,7 @@ namespace Core
             //thumb.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
 
             Image.GetThumbnailImageAbort myCallback = new Image.GetThumbnailImageAbort(ThumbnailCallback);
-            MemoryStream ms = new MemoryStream(Convert.FromBase64String(this.Image));
+            MemoryStream ms = new MemoryStream(this.Image);
             Image i = System.Drawing.Image.FromStream(ms);
 
             //Figure out what our heights and widths need to be
@@ -119,8 +130,6 @@ namespace Core
                     _width = (int)value;
                     value = (decimal)_height * res -1;
                     _height = (int)value;
-                    //if (res == 1)
-                        //break;
                 }
             }
             
@@ -140,7 +149,7 @@ namespace Core
         public string? Name { get; protected set; }    
         public string? Description { get; protected set; }
        //public byte[]? Image { get; protected set; }
-       public string Image { get; protected set; }
+       public byte[] Image { get; protected set; }
 
         public string Cost { get; protected set; }
         public string Link { get; protected set; }

@@ -38,7 +38,7 @@ namespace SimpleOrders.Pages.Items
                 //System.Diagnostics.Debug.WriteLine("Loading Products");
                 //Get account id and pass that into the product select stored proc
 
-                this.Items = Item.GetItems(Int32.Parse("1"));
+                this.Items = Item.GetItems();
 
                 //if (_items != null)
                 //    Items = _items;

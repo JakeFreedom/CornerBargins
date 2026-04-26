@@ -1,0 +1,48 @@
+﻿@page
+@model CB.Pages.Tools.Manage.IndexModel
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @*Table of items starts here*@
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Cost</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Link</th>
+                        <th scope="col">Last Updated</th>
+                    </tr>
+                </thead>
+                @*Loop this to generate table*@
+                <tbody>
+                    @{
+                        string tableRowColorP="table-primary";
+                        string tableRowColorS = "table-success";
+                        string finalTableRowColor = tableRowColorP;
+                        foreach (Core.Item item in Model.Items)
+                        {
+                            if (finalTableRowColor == tableRowColorP)
+                                finalTableRowColor = tableRowColorS;
+                            else
+                                finalTableRowColor = tableRowColorP;
+                            <tr class=@finalTableRowColor> @*Switch between Primary and Success*@
+                                <th scope="row">@item.ID</th>
+                                <td>@item.Name</td>
+                                <td>@Decimal.Parse(item.Cost.ToString()).ToString("C")</td>
+                                <td>@item.Status</td>
+                                <td>@item.Link</td>
+                                <td>@item.Updated.ToShortDateString()</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
