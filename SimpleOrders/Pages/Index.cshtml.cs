@@ -4,7 +4,7 @@ using Core;
 
 namespace SimpleOrders.Pages
 {
-    public class IndexModel : Base.BasePageModelModel
+    public class IndexModel : CB.Pages.Base.BasePageModel
     {
         private readonly ILogger<IndexModel> _logger;
 

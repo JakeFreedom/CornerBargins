@@ -7,10 +7,10 @@ namespace Core
     {
 
         //Local Host -=- Office
-        //FileStream sr =  File.Open("d:\\Auth\\authcodes.txt", FileMode.Open,FileAccess.Read);
+        FileStream sr =  File.Open("d:\\Auth\\authcodes.txt", FileMode.Open,FileAccess.Read);
 
         //Home Build
-        FileStream sr = File.Open("e:\\Auth\\authcodes.txt", FileMode.Open, FileAccess.Read);
+        //FileStream sr = File.Open("e:\\Auth\\authcodes.txt", FileMode.Open, FileAccess.Read);
 
         //Dev Server -- Production
         //FileStream sr = File.Open("e:\\Auth\\authcodes.txt", FileMode.Open, FileAccess.Read);
@@ -166,6 +166,15 @@ namespace Core
 
             DBCmd = cmd;
 
+        }
+
+
+        public DataView GetDBDataAsDataView()
+        {
+            if(this.RowsAffected>0)
+                return new DataView(this.DBData.Tables[0]);
+
+            return new DataView();
         }
         private SqlConnection DBConn { get; set; }
         private SqlCommand? DBCmd { get; set; }

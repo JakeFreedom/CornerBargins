@@ -179,3 +179,34 @@ function CustomerNumber_OnTextChange() {
     }
 }
 
+function ShowFullImage(itemID, itemName) {
+
+    //Make ajax call to load the image up, we are doing it this way to keep the site speed up.
+    var token = $("input[name='__RequestVerificationToken']").val();
+    $.ajax(
+        {
+            method: "Post",
+            headers: { "RequestVerificationToken": token },
+            //url: "TagWriter/Index?handler=SaveTag",
+            url: "Items/Index?handler=ShowFullImage",
+            data: {
+                ItemID: itemID,
+                ItemName: itemName
+            },
+            datatype: "text",
+            success: function (data) {
+                var newModal = $(data).find("#mdlFullImage");
+                $("#mdlFullImage").replaceWith(newModal);
+                $("#mdlFullImage").modal('show');
+                //console.log(data);
+
+            },
+            error: function (x, r, y) {
+                $("#mdlFullImage").modal('show');
+            }
+        });
+    //alert(fullImage);
+    //$("#imgFullImage").attr("src", fullImage);
+
+}
+

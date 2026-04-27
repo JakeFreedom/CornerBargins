@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     
+
     
     @Html.AntiForgeryToken()
 </head>
 <body class="bg-primary-subtle">
     <header>
-        <div class="row" style="border:solid 1px green;">
+        <div class="row" style="border:solid 0px green;">
             <div class="col-md-1">
                 <img src='~/images/cb-logo-5.png' style="width:585%;" />
             </div>
@@ -58,11 +59,12 @@
         </div>
     </footer>
 
+
     @section Scripts {
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     }
-    @await RenderSectionAsync("Scripts", required: false)
+    @RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

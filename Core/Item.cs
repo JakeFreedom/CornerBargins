@@ -45,8 +45,6 @@ namespace Core
         {
             List<Item> returnList = new List<Item>();
             DataManager dm = new DataManager();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-
 
             dm.GetDataProc("Item_S");
             if (dm.RowsAffected > 0)
@@ -71,16 +69,29 @@ namespace Core
 
         }
 
+        public static byte[] GetItemImage(int ID)
+        {
+            byte[] itemImage = null;
+            DataManager dm = new DataManager();
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("intItemID", ID.ToString());
+            dm.GetDataProc("Item_SFullImage", param);
+
+            if(dm.RowsAffected > 0)
+            {
+                DataTable dt = dm.DBData.Tables[0];
+                DataView dv = new DataView(dt);
+
+                itemImage = (byte[])dv[0][0];
+
+            }
+
+            return itemImage;
+        }
+
 
         public static int AddItem(byte[] image, string name, string description, decimal cost, string link, string labelColor)
         {
-           
-            //var currentMethod = MethodBase.GetCurrentMethod();
-            //var par = currentMethod.GetParameters();
-            //foreach (var param in par)
-            //{
-            //    System.Diagnostics.Debug.WriteLine(param.ToString());
-            //}
 
             DataManager dm = new DataManager();
             List<SqlParameter> sp = new List<SqlParameter>();
@@ -96,7 +107,7 @@ namespace Core
         }
 
         private bool ThumbnailCallback() { return false; }
-        public byte[] GetResizedImage()
+        public byte[] GetResizedImage(int maxHeight, int maxWidth)
         {
             //Image thumb = i.GetThumbnailImage(128, 128, null, IntPtr.Zero);
             //thumb.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
@@ -105,35 +116,17 @@ namespace Core
             MemoryStream ms = new MemoryStream(this.Image);
             Image i = System.Drawing.Image.FromStream(ms);
 
-            //Figure out what our heights and widths need to be
-            //First lets find out resolution
-            decimal res = (i.Height > i.Width ? ((decimal)i.Width / (decimal)i.Height) :((decimal)i.Height/(decimal)i.Width));
-            int _height = i.Height;
-            int _width = i.Width;
-
-            if (_height > _width)
-            {
-                while (_height * res > 275)
-                {
-                    decimal value = (decimal)_height * res;
-                    _height = (int)value;
-                    value = (decimal)_width * res;
-                    _width = (int)value;
-
-                }
-            }
+            double aspectRatio = (double)i.Width / i.Height;
+            int _height = maxHeight;
+            int _width = maxWidth;
+            Bitmap b = null;
+            if (aspectRatio > 1)
+                _height = (int)(_width / aspectRatio);
             else
-            {
-                while (_width * res > 275)
-                {
-                    decimal value = (decimal)_width * res -1;
-                    _width = (int)value;
-                    value = (decimal)_height * res -1;
-                    _height = (int)value;
-                }
-            }
-            
-            Bitmap b = new Bitmap(i);
+                _width = (int)(_height * aspectRatio);
+
+            b = new Bitmap(i, _width, _height);
+
             
             Image myThumbnail = b.GetThumbnailImage(_width,_height, myCallback, IntPtr.Zero);
             //myThumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
@@ -145,10 +138,38 @@ namespace Core
             return File.ReadAllBytes($"C:\\pwp\\{this.Name}.png");
         }
 
+        public byte[] GetFullImage(byte[] image, int maxWidth, int maxHeight)
+        {
+            Image.GetThumbnailImageAbort myCallback = new Image.GetThumbnailImageAbort(ThumbnailCallback);
+            MemoryStream ms = new MemoryStream(image);
+            Image i = System.Drawing.Image.FromStream(ms);
+
+            double aspectRatio = (double)i.Width / i.Height;
+            int _height = maxHeight;
+            int _width = maxWidth;
+            Bitmap b = null;
+            if (aspectRatio > 1)
+                _height = (int)(_width / aspectRatio);
+            else
+                _width = (int)(_height * aspectRatio);
+
+            b = new Bitmap(i, _width, _height);
+
+
+            Image myThumbnail = b.GetThumbnailImage(_width, _height, myCallback, IntPtr.Zero);
+
+
+            myThumbnail.Save($"C:\\pwp\\temp.png");
+
+            //return ms.ToArray();
+            return File.ReadAllBytes($"C:\\pwp\\temp.png");
+        }
+
+
         public int ID { get; protected set; }
         public string? Name { get; protected set; }    
         public string? Description { get; protected set; }
-       //public byte[]? Image { get; protected set; }
+       
        public byte[] Image { get; protected set; }
 
         public string Cost { get; protected set; }

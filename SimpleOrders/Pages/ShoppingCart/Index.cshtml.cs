@@ -5,7 +5,7 @@ using SimpleOrders.Pages.Base;
 
 namespace SimpleOrders.Pages.ShoppingCart
 {
-    public class IndexModel : BasePageModelModel
+    public class IndexModel : CB.Pages.Base.BasePageModel
     {
         public override void OnGet()
         {

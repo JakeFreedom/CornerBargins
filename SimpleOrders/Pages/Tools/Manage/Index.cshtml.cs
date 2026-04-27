@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CB.Pages.Tools.Manage
 {
-    public class IndexModel : PageModel
+    public class IndexModel : CB.Pages.Base.BasePageModel
     {
-        public void OnGet()
+        public override void OnGet()
         {
             GetItems();
         }

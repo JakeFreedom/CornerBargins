@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SimpleOrders.Pages.Base
+namespace CB.Pages.Base
 {
-    public class BasePageModelModel : PageModel
+    public class BasePageModel : PageModel
     {
         public virtual void OnGet()
         {
@@ -13,19 +13,20 @@ namespace SimpleOrders.Pages.Base
         
         public void CheckValidUser()
         {
+            System.Diagnostics.Debug.WriteLine("Checking for valid user");
             //CheckForLogin()
             //System.Diagnostics.Debug.WriteLine(HttpContext.Request.GetDisplayUrl());
-            //if (HttpContext.Session.Keys.Count() == 0)
-            //{
-            //    //System.Diagnostics.Debug.WriteLine(HttpContext.Request.GetDisplayUrl());
-            //    HttpContext.Response.Redirect("https://localhost:7260/Index");
-            //}
-            //else
-            //{
-            //    this.IsValidUser = true;
-            //    this.UserID = (int)HttpContext.Session.GetInt32("UserID");
-            //    this.UserName = HttpContext.Session.GetString("UserName");
-            //}
+            if (HttpContext.Session.Keys.Count() == 0)
+            {
+                //System.Diagnostics.Debug.WriteLine(HttpContext.Request.GetDisplayUrl());
+                HttpContext.Response.Redirect("https://localhost:7260/Index");
+            }
+            else
+            {
+                this.IsValidUser = true;
+                this.UserID = (int)HttpContext.Session.GetInt32("UserID");
+                this.UserName = HttpContext.Session.GetString("UserName");
+            }
         }
 
         public int UserID { get; protected set; }

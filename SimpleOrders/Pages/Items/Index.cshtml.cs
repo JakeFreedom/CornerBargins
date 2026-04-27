@@ -1,14 +1,14 @@
 using Core;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using SimpleOrders.Pages.Base;
 
-namespace SimpleOrders.Pages.Items
+namespace CB.Pages.Items
 {
-    public class IndexModel : BasePageModelModel
+    public class IndexModel : PageModel
     {
 
-        public override void  OnGet()
+        public void OnGet()
         {
-            base.OnGet();
             LoadProducts();
             GetProductsInCart(-1, -1);
         }
@@ -31,20 +31,14 @@ namespace SimpleOrders.Pages.Items
 
         }
 
-        void LoadProducts()
+        void LoadProducts(bool fullLoad=true)
         {
-            //if (HttpContext.Session.GetInt32("AccountID") != null)
-            //{
-                //System.Diagnostics.Debug.WriteLine("Loading Products");
-                //Get account id and pass that into the product select stored proc
 
+            if (fullLoad)
                 this.Items = Item.GetItems();
+            else
+                this.Items = new List<Item>();
 
-                //if (_items != null)
-                //    Items = _items;
-                //else
-                //    Items = new List<Item>();
-            //}
         }
 
 
@@ -111,11 +105,22 @@ namespace SimpleOrders.Pages.Items
             //OnGet();
         }
 
+        public void OnPostShowFullImage(int itemID, string itemName)
+        {
+            LoadProducts(false);
+
+            byte[] itemImage = Item.GetItemImage(itemID);
+            this.Image = string.Format("data:image/" + "png" + ";base64,{0}", Convert.ToBase64String(new Item().GetFullImage(itemImage, 1200,900)));
+            this.Name = itemName.Replace('-', ' ');
+        }
 
        // public string? UserName { get; protected set; }
         public List<Item>? Items { get; protected set; }
         //public int UserID { get; protected set; }
 
         public List<Item>? CartedItems { get; protected set; }
+
+        public string Image { get; protected set; }
+        public string Name { get; protected set; }
     }
 }
