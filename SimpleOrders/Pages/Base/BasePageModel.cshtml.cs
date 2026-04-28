@@ -18,8 +18,8 @@ namespace CB.Pages.Base
             //System.Diagnostics.Debug.WriteLine(HttpContext.Request.GetDisplayUrl());
             if (HttpContext.Session.Keys.Count() == 0)
             {
-                //System.Diagnostics.Debug.WriteLine(HttpContext.Request.GetDisplayUrl());
-                HttpContext.Response.Redirect("https://localhost:44305/Login");
+                //System.Diagnostics.Debug.WriteLine(HttpContext.Request.Host);// GetDisplayUrl());
+                HttpContext.Response.Redirect($"https://{HttpContext.Request.Host}/Login");
             }
             else
             {

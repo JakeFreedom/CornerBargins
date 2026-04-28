@@ -25,8 +25,8 @@ function BuildLoginButton() {
                 },
                 datatype: "text",
                 success: function (data) {
-                    //alert("Login Good");
-                    window.location.href ="https://localhost:44305/Tools/Manage"
+                    //I don't like this
+                    window.location.href = "https://" + window.location.host + "/Tools/Manage"
                 },
                 error: function (x, r, y) { }
             });

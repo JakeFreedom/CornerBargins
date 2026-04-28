@@ -21,26 +21,88 @@
                 </thead>
                 @*Loop this to generate table*@
                 <tbody>
-                    @{
-                        string tableRowColorP="table-primary";
-                        string tableRowColorS = "table-success";
-                        string finalTableRowColor = tableRowColorP;
-                        foreach (Core.Item item in Model.Items)
-                        {
-                            if (finalTableRowColor == tableRowColorP)
-                                finalTableRowColor = tableRowColorS;
-                            else
-                                finalTableRowColor = tableRowColorP;
-                            <tr class=@finalTableRowColor> @*Switch between Primary and Success*@
-                                <th scope="row">@item.ID</th>
-                                <td>@item.Name</td>
-                                <td>@Decimal.Parse(item.Cost.ToString()).ToString("C")</td>
-                                <td>@item.Status</td>
-                                <td>@item.Link</td>
-                                <td>@item.Updated.ToShortDateString()</td>
-                            </tr>
+                        @{
+                            string tableRowColorP="table-primary";
+                            string tableRowColorS = "table-success";
+                            string finalTableRowColor = tableRowColorP;
+                            foreach (Core.Item item in Model.Items)
+                            {
+                                if (finalTableRowColor == tableRowColorP)
+                                    finalTableRowColor = tableRowColorS;
+                                else
+                                    finalTableRowColor = tableRowColorP;
+
+                                    <tr class="@finalTableRowColor"> @*Switch between Primary and Success*@
+                                        <th scope="row">@item.ID</th>
+                                        <td>@item.Name</td>
+                                        <td>@Decimal.Parse(item.Cost.ToString()).ToString("C")</td>
+                                        <td>@item.Status</td>
+                                        <td>@item.Link</td>
+                                        <td>@item.Updated.ToShortDateString()</td>
+                                    </tr>
+
+                            }
                         }
-                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Cost</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Link</th>
+                        <th scope="col">Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <div class="accordion" id="accordionExample">
+                        <tr data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <th score="row">12312--12</th>
+                            <td>alsdkjf</td>
+                            <td>15.00</td>
+                            <td>1</td>
+                            <td>https://www.alkota.com</td>
+                            <td>4-26-2026</td>
+                        </tr>
+                        <tr class="collapse" id="collapseOne">
+                            <td colspan="6">
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </div>
+
+                    <div class="accordion" id="accordionExample">
+                        <tr data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            <th score="row">12312--12898</th>
+                            <td>alsdkjf</td>
+                            <td>15.00</td>
+                            <td>1</td>
+                            <td>https://www.alkota.com</td>
+                            <td>4-26-2026</td>
+                            
+                        </tr>
+                        <tr class="collapse" id="collapseTwo">
+                            <td colspan="6">
+                            <div id="collapseTwo" class="accordion-collapse collapse row" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                </div>
+                            </div>
+                            </td>
+                        </tr>
+                    </div>
                 </tbody>
             </table>
         </div>
