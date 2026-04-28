@@ -13,19 +13,20 @@ namespace CB.Pages.Base
         
         public void CheckValidUser()
         {
-            System.Diagnostics.Debug.WriteLine("Checking for valid user");
+            //System.Diagnostics.Debug.WriteLine("Checking for valid user");
             //CheckForLogin()
             //System.Diagnostics.Debug.WriteLine(HttpContext.Request.GetDisplayUrl());
             if (HttpContext.Session.Keys.Count() == 0)
             {
                 //System.Diagnostics.Debug.WriteLine(HttpContext.Request.GetDisplayUrl());
-                HttpContext.Response.Redirect("https://localhost:7260/Index");
+                HttpContext.Response.Redirect("https://localhost:44305/Login");
             }
             else
             {
                 this.IsValidUser = true;
                 this.UserID = (int)HttpContext.Session.GetInt32("UserID");
                 this.UserName = HttpContext.Session.GetString("UserName");
+
             }
         }
 

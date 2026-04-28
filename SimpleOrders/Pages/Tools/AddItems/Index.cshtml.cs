@@ -2,13 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SimpleOrders.Pages.Tools.AddItems
+namespace CB.Pages.Tools.AddItems
 {
-    public class IndexModel : PageModel
+    public class IndexModel : CB.Pages.Base.BasePageModel
     {
-        public void OnGet()
+        public override void OnGet()
         {
-
+            base.OnGet();
         }
 
         public void OnPostUploadMedia(IFormFile _file, string itemName, string itemDescription, string itemLabelColor, decimal itemCost, string itemLink) {

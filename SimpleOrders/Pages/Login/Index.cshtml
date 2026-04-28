@@ -1,0 +1,26 @@
+﻿@page
+@model CB.Pages.Login.IndexModel
+@{
+    Layout = "_Layout";
+}
+<div class="containter">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" style="border:0px solid green; text-align:left;">
+            <label class="col-form-label mt-2 text-success" for="txtUserName" style="font-size:2rem; text-align:left; border: 0px solid green;">User Name:</label>
+            <input class="form-control" type="text" id="txtUserName" /></div>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" style="text-align:left;">
+            <label class="col-form-label mt-2 text-success" for="txtPassword" style="font-size:2rem;">Password:</label>
+            <input type="password" class="form-control" id="txtPassword" /></div>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 mt-3"><button class="btn btn-primary" id="btnLogin" name="btnLogin" value="Login">Login</button></div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

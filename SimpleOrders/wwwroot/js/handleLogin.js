@@ -2,7 +2,6 @@
 //This will be the global token. No need to get it in every .js file when doing a ajax call back
 var token = $("input[name='__RequestVerificationToken']").val();
 $(document).ready(function () {
-    
     BuildLoginButton();
 
 });
@@ -10,25 +9,24 @@ $(document).ready(function () {
 function BuildLoginButton() {
 
     $("#btnLogin").click(function () {
-
         var token = $("input[name='__RequestVerificationToken']").val();
         //Get User Name
         var userName = $("#txtUserName").val()
-        var accountID = $("#txtAccountID").val()
+        var password = $("#txtPassword").val()
 
         $.ajax(
             {
-                method: "GET",
+                method: "POST",
                 headers: { "RequestVerificationToken": token },
-                //url: "TagWriter/Index?handler=SaveTag",
-                url: "Index?handler=CheckLogin",
+                url: "Login/Index?handler=CheckLogin",
                 data: {
-                    strUserName: userName,
-                    strAccountID: accountID
+                    UserName: userName,
+                    Password: password
                 },
                 datatype: "text",
                 success: function (data) {
-                    location.reload();
+                    //alert("Login Good");
+                    window.location.href ="https://localhost:44305/Tools/Manage"
                 },
                 error: function (x, r, y) { }
             });

@@ -8,6 +8,7 @@ namespace CB.Pages.Tools.Manage
     {
         public override void OnGet()
         {
+            base.OnGet();
             GetItems();
         }
 
