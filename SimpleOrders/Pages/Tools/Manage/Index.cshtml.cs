@@ -18,6 +18,11 @@ namespace CB.Pages.Tools.Manage
 
         }
 
+        public void OnPostUpdateItem(int itemID)
+        {
+            System.Diagnostics.Debug.WriteLine(itemID);
+            GetItems();
+        }
 
         public List<Item> Items { get; protected set; }
     }

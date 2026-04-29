@@ -6,6 +6,11 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-md-3 m-2 p-2" style="border:0px solid green; text-align:left;">
+            <button id="btnAddItem" class="btn btn-primary">Add New Item</button>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             @*Table of items starts here*@
             <table class="table table-hover">
@@ -21,90 +26,121 @@
                 </thead>
                 @*Loop this to generate table*@
                 <tbody>
-                        @{
-                            string tableRowColorP="table-primary";
-                            string tableRowColorS = "table-success";
-                            string finalTableRowColor = tableRowColorP;
-                            foreach (Core.Item item in Model.Items)
-                            {
-                                if (finalTableRowColor == tableRowColorP)
+                    @{
+                        string tableRowColorP="table-primary";
+                        string tableRowColorS = "table-success";
+                        string finalTableRowColor = tableRowColorP;
+                        string dataBsTarget = "#tableRowDiv";
+                        int divIndex = 1;
+                        string divIndexName = "tableRowDiv";
+                        string imageSource = string.Empty;
+                        string src = string.Empty;
+                    }
+                        <div class="accordion" id="accordionExample">
+                        @foreach (Core.Item item in Model.Items)
+                        {
+                            
+                            imageSource =  Convert.ToBase64String(item.GetResizedImage(300, 300));
+                            src = string.Format("data:image/" + "png" + ";base64,{0}", imageSource);
+                            dataBsTarget = $"#tableRowDiv{divIndex.ToString()}";
+                            divIndexName = $"tableRowDiv{divIndex.ToString()}";
+
+                                @if (finalTableRowColor == tableRowColorP)
                                     finalTableRowColor = tableRowColorS;
                                 else
                                     finalTableRowColor = tableRowColorP;
 
-                                    <tr class="@finalTableRowColor"> @*Switch between Primary and Success*@
+                                <tr class="@finalTableRowColor"  aria-expanded="true"  style="cursor:pointer;" onclick="ShowDiv(`@dataBsTarget`)">
+                                @*Switch between Primary and Success*@
                                         <th scope="row">@item.ID</th>
                                         <td>@item.Name</td>
                                         <td>@Decimal.Parse(item.Cost.ToString()).ToString("C")</td>
                                         <td>@item.Status</td>
                                         <td>@item.Link</td>
                                         <td>@item.Updated.ToShortDateString()</td>
-                                    </tr>
+                                </tr>
+                                <tr class="collapse accordion-collapse" data-bs-parent="#accordionExample" id="@divIndexName">
+                                    <td colspan="6">
+                                        <div class="accordion-collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                @*This is where we will be able to edit the item*@
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <img src="@src" />
+                                                        <div class="row">
 
-                            }
+                                                            <div class="col-md-3"></div>
+                                                            <div class="col-md-3 form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="chkItemVisible-@item.ID">
+                                                                <label class="form-check-label" for="chkItemVisible">
+                                                                    Visible
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-5 form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="chkShowResButton-@item.ID">
+                                                                <label class="form-check-label" for="chkShowResButton">
+                                                                    Show Button
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="row">
+                                                            <div class="col-md-4" style="text-align:right;"><label>Title:</label></div>
+                                                            <div class="col-md-8"><input type="text" class="form-control" value="@item.Name" /></div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4" style="text-align:right;"><label>Description:</label></div>
+                                                            <div class="col-md-8" style="border:0px solid green;"><textarea class="form-control" cols="40" rows="5">@item.Description</textarea></div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4" style="text-align:right;"><label>Cost:</label></div>
+                                                            <div class="col-md-8" style="border:0px solid green;"><input class="form-control" type="text" value="@item.Cost" /></div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4" style="text-align:right;"><label>Link:</label></div>
+                                                            <div class="col-md-8" style="border:0px solid green;"><input class="form-control" type="text" value="@item.Link" /></div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4" style="text-align:right;"><label>Status:</label></div>
+                                                            <div class="col-md-8" style="border:0px solid green;">
+                                                            <select class="form-select" id="selItemStatus">
+                                                                <option value="-1">Select Status</option>
+                                                                <option value="0">Unknown</option>
+                                                                <option value="1">Listed</option>
+                                                                <option value="2">Pending</option>
+                                                                <option value="3">Sold</option>
+                                                            </select>
+                                               
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-10"></div>
+                                            <div class="col-md-2"><button class="btn btn-warning" onclick="UpdateItem(@divIndex)">Update</button></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                  
+                            divIndex++;
                         }
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Cost</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Link</th>
-                        <th scope="col">Last Updated</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <div class="accordion" id="accordionExample">
-                        <tr data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <th score="row">12312--12</th>
-                            <td>alsdkjf</td>
-                            <td>15.00</td>
-                            <td>1</td>
-                            <td>https://www.alkota.com</td>
-                            <td>4-26-2026</td>
-                        </tr>
-                        <tr class="collapse" id="collapseOne">
-                            <td colspan="6">
-                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </div>
-
-                    <div class="accordion" id="accordionExample">
-                        <tr data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                            <th score="row">12312--12898</th>
-                            <td>alsdkjf</td>
-                            <td>15.00</td>
-                            <td>1</td>
-                            <td>https://www.alkota.com</td>
-                            <td>4-26-2026</td>
-                            
-                        </tr>
-                        <tr class="collapse" id="collapseTwo">
-                            <td colspan="6">
-                            <div id="collapseTwo" class="accordion-collapse collapse row" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                </div>
-                            </div>
-                            </td>
-                        </tr>
-                    </div>
+                </div>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/ToolActions.js" asp-append-version="true"></script>
+}
+

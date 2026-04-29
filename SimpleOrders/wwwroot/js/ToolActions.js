@@ -56,3 +56,43 @@ function UploadImage() {
     //$("#frmImageUpload").submit();
     
 }
+
+
+
+
+function UpdateItem(itemID) {
+    var visCheckBox = "#chkItemVisible-" + itemID;
+    var showResButton = "#chkShowResButton-" + itemID;
+    //alert($(visCheckBox).is(':checked'));
+    //alert($(showResButton).is(':checked'));
+
+    var tableRowToToggle = "#tableRowDiv" + itemID;
+    //alert(tableRowToToggle);
+    
+
+
+    var token = $("input[name='__RequestVerificationToken']").val();
+
+    $.ajax(
+        {
+            method: "POST",
+            headers: { "RequestVerificationToken": token },
+            url: "Manage/Index?handler=UpdateItem",
+            data: {
+                ItemID: itemID
+            },
+            datatype: "text",
+            success: function (data) {
+                $(tableRowToToggle).toggleClass('collapse');
+                //window.location.reload();
+            },
+            error: function (x, r, y) { }
+        });
+
+}
+
+function ShowDiv(target) {
+
+    $(target).toggleClass('collapse');
+        
+}
