@@ -66,7 +66,14 @@
                                                 @*This is where we will be able to edit the item*@
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <img src="@src" />
+                                                        <img src="@src" id="itemImage-@item.ID" />
+                                                        <div class="row">
+                                                            <div class="col-md-2"></div>
+                                                            <div id="dropFilesArea" class="col-md-8 border-black" style="border:1px solid black;" ondragover="FileDropAreaEntered(event)" ondrop="UploadDroppedFiles(event, @item.ID);" draggable="true">
+                                                                <p>drop files here</p>
+                                                            </div>
+                                                            <div class="col-md-2"></div>
+                                                        </div>
                                                         <div class="row">
 
                                                             <div class="col-md-3"></div>
@@ -76,7 +83,7 @@
                                                                     Visible
                                                                 </label>
                                                             </div>
-                                                            <div class="col-md-5 form-check">
+                                                            <div class="col-md-4 form-check">
                                                                 <input class="form-check-input" type="checkbox" value="" id="chkShowResButton-@item.ID">
                                                                 <label class="form-check-label" for="chkShowResButton">
                                                                     Show Button
@@ -132,6 +139,58 @@
                 </div>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+@*Add New Item Modal*@
+<div class="modal-additem fade" role="dialog" id="mdlAddItem" tabindex="-1" aria-hidden="true" aria-labelledby="mdlAddItem" style="width:100%;">
+    <div class="modal-dialog modal-md" style="color:black; border-color:orange;">
+        <div class="modal-content pl-3 pr-3" style="height:100%; border:0px;">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" method="post" id="frmImageUpload">
+                    <input type="file" id="userFile" name="userFile" />
+                    <input type="button" value="Save" onclick="UploadImage()" />
+                </form>
+
+                <div class="row pt-2 mt-2" style="border:solid 1px green;">
+                    <div class="col-md-6">
+                        <div>
+                            <label class="col-form-label mt-2" for="txtItemName">Item Name</label>
+                            <input type="text" class="form-control" placeholder="" id="txtItemName" required>
+                        </div>
+                        <div>
+                            <label class="col-form-label mt-2" for="txtItemCost">Item Cost</label>
+                            <input type="text" class="form-control" placeholder="" id="txtItemCost">
+                        </div>
+                        <div>
+                            <label class="col-form-label mt-2" for="txtLabelColor">Label Color</label>
+                            <input type="text" class="form-control" placeholder="" id="txtLabelColor">
+                        </div>
+                        <div>
+                            <label class="col-form-label mt-2" for="txtItemLink">Item Link</label>
+                            <input type="text" class="form-control" placeholder="" id="txtItemLink">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <label for="txtItemDescription" class="form-label mt-2">Item Description</label>
+                            <textarea class="form-control" id="txtItemDescription" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* <div>
+                    <input type="button" class="btn btn-primary" style="opacity:.2;" value="AddItem" id="btnAddItem" disabled />
+                    <input type="button" class="btn btn-warning float-right mr-2 btn" value="Cancel" data-target="#mdlAddItem" data-toggle="modal" />
+                </div> *@
+            <br />
         </div>
     </div>
 </div>

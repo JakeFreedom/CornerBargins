@@ -1,5 +1,17 @@
 ﻿$(document).ready(function () {
-    
+
+
+    //var dropFilesArea = $("dropFilesArea");
+    //dropFilesArea.on('dragover', function(e) {
+    //    alert('area entered')
+    //    e.preventDefault();
+    //    drogFilesArea.addClass('drag-over');
+    //});
+
+    $("#btnAddItem").click(function () {
+        $("#mdlAddItem").modal('show');
+    });
+
 });
 
 
@@ -95,4 +107,42 @@ function ShowDiv(target) {
 
     $(target).toggleClass('collapse');
         
+}
+
+
+//Drag Drop Files to upload
+function FileDropAreaEntered(event) {
+    event.preventDefault();
+
+    
+}
+
+function UploadDroppedFiles(event, itemID) {
+    event.preventDefault();
+    event.stopPropagation();
+    var dt = event.dataTransfer;
+    //alert(dt.files[0].name);
+
+    var fd = new FormData();
+    fd.append('_file', dt.files[0]);
+    fd.append('itemID', itemID);
+
+    $.ajax(
+        {
+            method: "POST",
+            headers: { "RequestVerificationToken": token },
+            url: "AddItems/Index?handler=UpdateItemImage",
+            data: fd,
+            datatype: "text",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                //alert("success");
+                window.location.reload();
+                //$("#uploadedImage").replaceWith(image);
+                //$("#mdlAddItem").modal('hide');
+            }
+        });
+
+
 }

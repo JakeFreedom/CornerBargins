@@ -1,15 +1,14 @@
-﻿using System;
-using System.Data;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Data.Common;
+using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
-
-using System.ComponentModel;
-using Microsoft.Data.SqlClient;
-using System.Reflection;
 
 
 namespace Core
@@ -105,6 +104,18 @@ namespace Core
 
             return dm.InsertDataProc<int>("Item_I", sp);
         }
+
+        public static int UpdateItemImage(byte[] newImage, int itemID) 
+        {
+            DataManager dm = new DataManager();
+            List<SqlParameter> sp = new List<SqlParameter>();
+
+            sp.Add(new SqlParameter("binImage", newImage));
+            sp.Add(new SqlParameter("intID", itemID));
+
+            return dm.InsertDataProc<int>("Item_U", sp);
+        }
+
 
         private bool ThumbnailCallback() { return false; }
         public byte[] GetResizedImage(int maxHeight, int maxWidth)

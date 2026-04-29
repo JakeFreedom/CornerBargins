@@ -23,12 +23,19 @@ namespace CB.Pages.Tools.AddItems
             {
                 _file.CopyTo(ms);
                 base64String = Convert.ToBase64String(ms.ToArray());
-                Image = string.Format("data:image/" + "png" + ";base64,{0}", base64String);
+                //Image = string.Format("data:image/" + "png" + ";base64,{0}", base64String);
             }
 
             //Save this to the DB 
             Core.Item.AddItem(ms.ToArray(), itemName, itemDescription, itemCost, itemLink, "green");
                 
+        }
+
+        public void OnPostUpdateItemImage(IFormFile _file, int itemID) {
+
+            MemoryStream ms = new MemoryStream();
+            _file.CopyTo(ms);
+            Core.Item.UpdateItemImage(ms.ToArray(), itemID);
         }
 
 
