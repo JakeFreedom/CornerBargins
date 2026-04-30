@@ -75,11 +75,8 @@ function UploadImage() {
 function UpdateItem(itemID) {
     var visCheckBox = "#chkItemVisible-" + itemID;
     var showResButton = "#chkShowResButton-" + itemID;
-    //alert($(visCheckBox).is(':checked'));
-    //alert($(showResButton).is(':checked'));
+      var tableRowToToggle = "#tableRowDiv" + itemID;
 
-    var tableRowToToggle = "#tableRowDiv" + itemID;
-    //alert(tableRowToToggle);
     
 
 
@@ -117,28 +114,33 @@ function FileDropAreaEntered(event) {
     
 }
 
-function UploadDroppedFiles(event, itemID) {
+function UploadDroppedFiles(event, itemID, binImage, binImageID) {
     event.preventDefault();
     event.stopPropagation();
     var dt = event.dataTransfer;
     //alert(dt.files[0].name);
 
     var fd = new FormData();
-    fd.append('_file', dt.files[0]);
+    fd.append('files', dt.files[0]);
     fd.append('itemID', itemID);
+    fd.append('binImage', binImage);
+    fd.append('binImageID', binImageID);
 
     $.ajax(
         {
             method: "POST",
             headers: { "RequestVerificationToken": token },
-            url: "AddItems/Index?handler=UpdateItemImage",
+            url: "Manage/Index?handler=UpdateItemImage",
             data: fd,
             datatype: "text",
             contentType: false,
             processData: false,
             success: function (data) {
                 //alert("success");
-                window.location.reload();
+                //window.location.reload();
+                var itemImageString = "#itemImage-" + itemID;
+                var itemImage = $(data).find(itemImageString);
+                $(itemImageString).replaceWith(itemImage);
                 //$("#uploadedImage").replaceWith(image);
                 //$("#mdlAddItem").modal('hide');
             }

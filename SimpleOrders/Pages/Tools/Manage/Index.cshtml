@@ -67,6 +67,7 @@
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <img src="@src" id="itemImage-@item.ID" />
+                             
                                                         <div class="row">
                                                             <div class="col-md-2"></div>
                                                             <div id="dropFilesArea" class="col-md-8 border-black" style="border:1px solid black;" ondragover="FileDropAreaEntered(event)" ondrop="UploadDroppedFiles(event, @item.ID);" draggable="true">
@@ -75,7 +76,6 @@
                                                             <div class="col-md-2"></div>
                                                         </div>
                                                         <div class="row">
-
                                                             <div class="col-md-3"></div>
                                                             <div class="col-md-3 form-check">
                                                                 <input class="form-check-input" type="checkbox" value="" id="chkItemVisible-@item.ID">
@@ -92,7 +92,30 @@
                                                             <div class="col-md-1"></div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-2" style="border:1px solid green;">
+                                                        <div class="row">
+                                                            @{
+                                                                int imageIndex = 0;
+                                                            }
+                                                            @for(int x=0; x<12; x++)
+                                                            {
+                                                                @* if (Model.BinMedia[x] != null)
+                                                                {
+                                                                    <div class="col-md-4 p-1 m-1" id="@x" style="border:1px solid blue; height:64px; width:64px;" draggable="true" ondragover="FileDropAreaEntered(event)" ondrop="UploadDroppedFiles(event, @item.ID,true,@Model.BinMedia[x].BinaryMediaID);"></div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="col-md-4 p-1 m-1" id="@x" style="border:1px solid blue; height:64px; width:64px;" draggable="true" ondragover="FileDropAreaEntered(event)" ondrop="UploadDroppedFiles(event, @item.ID,true,'0');"></div>
+                                                                }
+                                                            
+                                                                imageIndex++; *@
+                                                            }
+                                                        
+                                                            <div class="col-md-4 p-1 m-1" style="border:1px solid yellow; height:64px; width:64px; "></div>
+                                                            <div class="col-md-4 p-1 m-1" style="border:1px solid cyan; height:64px; width:64px;"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
                                                         <div class="row">
                                                             <div class="col-md-4" style="text-align:right;"><label>Title:</label></div>
                                                             <div class="col-md-8"><input type="text" class="form-control" value="@item.Name" /></div>

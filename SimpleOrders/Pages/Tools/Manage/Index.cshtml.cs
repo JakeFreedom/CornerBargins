@@ -9,6 +9,7 @@ namespace CB.Pages.Tools.Manage
         public override void OnGet()
         {
             base.OnGet();
+            this.BinMedia = new BinaryMediaCollection();
             GetItems();
         }
 
@@ -24,6 +25,14 @@ namespace CB.Pages.Tools.Manage
             GetItems();
         }
 
+        public void OnPostUpdateItemImage(IFormFile files, int itemID, bool binImage=false, int binImageID=0)
+        {
+            MemoryStream ms = new MemoryStream();
+            files.CopyTo(ms);
+            Core.Item.UpdateItemImage(ms.ToArray(), itemID);
+            OnGet();
+        }
         public List<Item> Items { get; protected set; }
+        public BinaryMediaCollection BinMedia { get; protected set; }
     }
 }
