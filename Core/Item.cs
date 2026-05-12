@@ -169,7 +169,7 @@ namespace Core
             Image myThumbnail = b.GetThumbnailImage(_width,_height, myCallback, IntPtr.Zero);
             //myThumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-
+       
             myThumbnail.Save($"C:\\pwp\\{this.Name}.png");
 
             //return ms.ToArray();

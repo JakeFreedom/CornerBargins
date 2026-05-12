@@ -32,7 +32,8 @@
                 if (i.Image != null && i.Image.Length > 0)
                 {
 
-                    string image = Convert.ToBase64String(i.GetResizedImage(350,350));
+                    //string image = Convert.ToBase64String(i.GetResizedImage(350,350));
+                    string image = Convert.ToBase64String(i.Image);
                     //imageFull = string.Format("data:image/" + "png" + ";base64,{0}", Convert.ToBase64String(i.GetFullImage()));
                     //string src = string.Format("data:image/" + i.Extension + ";base64,{0}", image);
                     src = string.Format("data:image/" + "png" + ";base64,{0}", image);
