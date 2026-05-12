@@ -68,6 +68,33 @@ namespace Core
 
         }
 
+        public static List<Item> GetItems_NoMedia()
+        {
+            List<Item> returnList = new List<Item>();
+            DataManager dm = new DataManager();
+
+            dm.GetDataProc("Item_S_NoMedia");
+            if (dm.RowsAffected > 0)
+            {
+                DataTable dt = dm.DBData.Tables[0];
+                DataView dv = new DataView(dt);
+                foreach (DataRowView drv in dv)
+                {
+                    Item i = new Item(Int32.Parse(drv["intID"].ToString()), drv["vcName"].ToString(), drv["vcDescription"].ToString(),
+                        decimal.Parse(drv["decCost"].ToString()).ToString(), drv["vcExternalLink"].ToString(), Int32.Parse(drv["intStatus"].ToString()), null,
+                        DateTime.Parse(drv["dtUpdated"].ToString()));
+
+                    returnList.Add(i);
+                }
+
+            }
+
+            if (returnList.Count > 0)
+                return returnList;
+            else
+                return new List<Item>();
+
+        }
         public static byte[] GetItemImage(int ID)
         {
             byte[] itemImage = null;

@@ -8,6 +8,9 @@
    @* <input type="hidden" id="hidCartContentsQty" name="hidCartContents.Qty" value="@Model.CartedItems.Count.ToString()" /> *@
 
     @{
+        if(!HttpContext.Request.Host.ToString().Contains("localhost"))
+            if(!HttpContext.Request.IsHttps)
+                HttpContext.Response.Redirect("https://www.cornerbargins.net/items");
         // if(Model.IsValidUser)
         // {
         // <h2 class="">Welcome, @Model.UserName</h2>a
@@ -53,7 +56,7 @@
                 // {
                 //     colorCode = "#77b300";
                 // }
-                sb.Append($"<div class='col-md-4 card border-primary mb-3 m-4 pb-1' style='max-width: 25rem;'><div class='card-header bg-primary'><b style=color:white;>{i.Name}</b></div><div class='card-body'><h4 class='card-title'></h4><p class='card-text'>{i.Description}</p><p class='float-md-center' style='text-align:center;'><center><img src='{src}'  style='display:{hasImage}; text-align:center; border-radius:5%; cursor:pointer;'  onclick=ShowFullImage(\"{i.ID}\",'{i.Name.Replace(' ', '-')}'); /></center></p></div><div><label class='text-success'>${i.Cost.ToString()}/OBO</label></div><div>Last Updated:{i.Updated.ToShortDateString()}</div><div><input type='button' class='btn btn-success' style='width:100%;' name='Reserve' value='Reserve This' /></div></div>");
+                sb.Append($"<div class='col-md-4 card border-primary mb-3 m-4 pb-1' style='max-width: 25rem;'><div class='card-header bg-primary'><b style=color:white;>{i.Name}</b></div><div class='card-body'><h4 class='card-title'></h4><p class='card-text'>{i.Description}</p><p class='float-md-center' style='text-align:center;'><center><img src='{src}'  style='display:{hasImage}; text-align:center; border-radius:5%; cursor:pointer;'  onclick=ShowFullImage(\"{i.ID}\",'{i.Name.Replace(' ', '-')}'); /></center></p></div><div><label class='text-success'>${i.Cost.ToString()}/OBO</label></div><div>Last Updated:{i.Updated.ToShortDateString()}</div><div><input type='button' class='btn btn-success' style='width:100%; display:none;' name='Reserve' value='Reserve This' /></div></div>");
                 src = string.Empty;
                 hasImage = "none";
                 @Html.Raw(sb.ToString());

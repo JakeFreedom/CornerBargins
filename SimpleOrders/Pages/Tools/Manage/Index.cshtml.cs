@@ -15,7 +15,7 @@ namespace CB.Pages.Tools.Manage
 
         public void GetItems()
         {
-            this.Items = Item.GetItems();
+            this.Items = Item.GetItems_NoMedia();
 
         }
 

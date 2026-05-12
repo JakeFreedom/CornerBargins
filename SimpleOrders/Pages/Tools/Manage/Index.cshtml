@@ -39,9 +39,11 @@
                         <div class="accordion" id="accordionExample">
                         @foreach (Core.Item item in Model.Items)
                         {
-                            
-                            imageSource =  Convert.ToBase64String(item.GetResizedImage(300, 300));
-                            src = string.Format("data:image/" + "png" + ";base64,{0}", imageSource);
+
+                            @* imageSource =  Convert.ToBase64String(item.GetResizedImage(300, 300));
+                            src = string.Format("data:image/" + "png" + ";base64,{0}", imageSource); *@
+                            src = "";
+
                             dataBsTarget = $"#tableRowDiv{divIndex.ToString()}";
                             divIndexName = $"tableRowDiv{divIndex.ToString()}";
 

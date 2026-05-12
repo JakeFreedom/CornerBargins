@@ -61,12 +61,9 @@ function UploadImage() {
                 //console.log(data);
                 //$("#uploadedImage").replaceWith(image);
                 $("#mdlAddItem").modal('hide');
+                window.location.reload();
             }
         });
-
-
-    //$("#frmImageUpload").submit();
-    
 }
 
 
@@ -76,7 +73,10 @@ function UpdateItem(itemID) {
     var visCheckBox = "#chkItemVisible-" + itemID;
     var showResButton = "#chkShowResButton-" + itemID;
       var tableRowToToggle = "#tableRowDiv" + itemID;
-
+    //These are obviously going to be status's
+    //1 Visible
+    //2 Show Reserve Box
+      //3 ETC...
     
 
 
@@ -108,12 +108,15 @@ function ShowDiv(target) {
 
 
 //Drag Drop Files to upload
+//Not 100% sure what this is doing
 function FileDropAreaEntered(event) {
     event.preventDefault();
 
     
 }
 
+
+//This will need to be modified for multiple files
 function UploadDroppedFiles(event, itemID, binImage, binImageID) {
     event.preventDefault();
     event.stopPropagation();
