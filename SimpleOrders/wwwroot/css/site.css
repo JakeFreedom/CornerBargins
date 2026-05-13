@@ -5519,7 +5519,7 @@ textarea.form-control-lg {
 
 .modal-additem {
     --bs-modal-zindex: 1055;
-    --bs-modal-width: 750px;
+    --bs-modal-width: 900px;
     --bs-modal-padding: 1rem;
     --bs-modal-margin: 0.5rem;
     --bs-modal-color: var(--bs-body-color);
@@ -5590,7 +5590,7 @@ textarea.form-control-lg {
   pointer-events: none;
 }
 .modal.fade .modal-dialog {
-  transform: translate(0, -50px);
+  tr: translate(0, -50px);
   transition: transform 0.3s ease-out;
 }
 @media (prefers-reduced-motion: reduce) {

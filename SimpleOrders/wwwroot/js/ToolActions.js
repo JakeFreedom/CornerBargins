@@ -12,6 +12,16 @@
         $("#mdlAddItem").modal('show');
     });
 
+    $("#userFile").on('dragover', (e) => { e.preventDefault(); });
+
+
+    //Well use this to create a new type file entry so the user can drop 
+    $("#userFile").on('drop', (e) => {
+        var fileInput = document.getElementById('userFile');
+        alert(fileInput.files);
+        console.log(fileInput.files);
+    });
+
 });
 
 
@@ -31,8 +41,10 @@ function UploadImage() {
     
 
     var fileInput = document.getElementById('userFile');
-    //alert(fileInput.length);
     var file = fileInput.files[0];
+    //Loop these files and add them all
+    //How do we control what slot they are in
+    //Do we always assume the first image will be the primary image? Ebay does.
     //alert(file);
     var fd = new FormData();
     fd.append('_file', file);
@@ -42,8 +54,6 @@ function UploadImage() {
     fd.append('itemLink', itemLink);
     fd.append('itemCost', itemCost);
     fd.append('itemLabelColor', itemLabelColor);
-    //alert(fd);
-    //alert($('#userFile')[0].files[0].name);
     
 
     $.ajax(
@@ -111,11 +121,44 @@ function ShowDiv(target) {
 //Not 100% sure what this is doing
 function FileDropAreaEntered(event) {
     event.preventDefault();
-
-    
 }
 
 
+
+function AddDroppedFile(event, itemID) {
+    event.preventDefault();
+    event.stopPropagation();
+    alert(itemID);
+    var dt = event.dataTransfer;
+    alert(dt.files.length);
+    //dt.files.each(function (x) { alert(x.name); });
+    $.each(dt.files, function (index, file) {
+        //alert(file.name);
+        var fd = ne FormData();
+        fd.append('files', file);
+        fd.append('itemID', itemID)
+
+        $.ajax({
+            method: "POST",
+            headers: { "RequestVerificationToken": token },
+            url: "Manage/Index?handler=AddImage",
+            data: fd,
+            datatype: "text",
+            contentType: false,
+            processData: false,
+            success: function (data)
+            {
+                //var itemImageString = "#itemImage-" + itemID;
+                //var itemImage = $(data).find(itemImageString);
+                //$(itemImageString).replaceWith(itemImage);
+                //$("#uploadedImage").replaceWith(image);
+                //$("#mdlAddItem").modal('hide');
+            }
+            });
+    });
+    
+
+}
 //This will need to be modified for multiple files
 function UploadDroppedFiles(event, itemID, binImage, binImageID) {
     event.preventDefault();

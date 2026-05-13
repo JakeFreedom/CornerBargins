@@ -32,6 +32,14 @@ namespace CB.Pages.Tools.Manage
             Core.Item.UpdateItemImage(ms.ToArray(), itemID);
             OnGet();
         }
+
+        public void OnPostAddImage(IFormFile files, int itemID)
+        {
+            //Resize the image
+            //Tag the Image Type
+            //Save the image to the DB
+
+        }
         public List<Item> Items { get; protected set; }
         public BinaryMediaCollection BinMedia { get; protected set; }
     }

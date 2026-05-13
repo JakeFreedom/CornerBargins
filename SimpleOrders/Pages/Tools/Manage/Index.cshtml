@@ -112,9 +112,9 @@
                                                             
                                                                 imageIndex++; *@
                                                             }
-                                                        
-                                                            <div class="col-md-4 p-1 m-1" style="border:1px solid yellow; height:64px; width:64px; "></div>
-                                                            <div class="col-md-4 p-1 m-1" style="border:1px solid cyan; height:64px; width:64px;"></div>
+
+                                                    <div class="col-md-4 p-1 m-1" style="border:1px solid yellow; height:64px; width:64px;" ondragover="FileDropAreaEntered(event)" ondrop="AddDroppedFile(event, @item.ID)"; draggable="true"></div>
+                                                    <div class="col-md-4 p-1 m-1" style="border:1px solid cyan; height:64px; width:64px;" ondragover="FileDropAreaEntered(event)" ondrop="AddDroppedFile(event, @item.ID)"; draggable="true"></div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -165,11 +165,11 @@
                 </tbody>
             </table>
         </div>
-    </div>
 </div>
 
+
 @*Add New Item Modal*@
-<div class="modal-additem fade" role="dialog" id="mdlAddItem" tabindex="-1" aria-hidden="true" aria-labelledby="mdlAddItem" style="width:100%;">
+<div class="modal-additem fade" role="dialog" id="mdlAddItem" tabindex="-1" aria-hidden="true" aria-labelledby="mdlAddItem" style="width:100%; display:none;    ">
     <div class="modal-dialog modal-md" style="color:black; border-color:orange;">
         <div class="modal-content pl-3 pr-3" style="height:100%; border:0px;">
             <div class="modal-header">
@@ -180,27 +180,29 @@
             </div>
             <div class="modal-body">
                 <form enctype="multipart/form-data" method="post" id="frmImageUpload">
-                    <input type="file" id="userFile" name="userFile" />
+                    <div id="divFilesToUpload">
+                        <input type="file" id="userFile" name="userFile" />
+                    </div>
                     <input type="button" value="Save" onclick="UploadImage()" />
                 </form>
 
-                <div class="row pt-2 mt-2" style="border:solid 1px green;">
+                <div class="row pt-2 mt-2" style="border:solid 0px green;">
                     <div class="col-md-6">
-                        <div>
-                            <label class="col-form-label mt-2" for="txtItemName">Item Name</label>
-                            <input type="text" class="form-control" placeholder="" id="txtItemName" required>
+                        <div class="row">
+                            <div class="col-md-4" style="text-align:right;"><label class="col-form-label mt-2" for="txtItemName">Item Name</label></div>
+                            <div class="col-md-8"><input type="text" class="form-control" placeholder="" id="txtItemName" required></div>
                         </div>
-                        <div>
-                            <label class="col-form-label mt-2" for="txtItemCost">Item Cost</label>
-                            <input type="text" class="form-control" placeholder="" id="txtItemCost">
+                        <div class="row">
+                            <div class="col-md-4" style="text-align:right;"><label class="col-form-label mt-2" for="txtItemCost">Item Cost</label></div>
+                            <div class="col-md-8"><input type="text" class="form-control" placeholder="" id="txtItemCost"></div>
                         </div>
-                        <div>
-                            <label class="col-form-label mt-2" for="txtLabelColor">Label Color</label>
-                            <input type="text" class="form-control" placeholder="" id="txtLabelColor">
+                        <div class="row">
+                            <div class="col-md-4" style="text-align:right;"><label class="col-form-label mt-2" for="txtLabelColor">Pallet Number</label></div>
+                            <div class="col-md-8"><input type="text" class="form-control" placeholder="" id="txtPalletNumber"></div>
                         </div>
-                        <div>
-                            <label class="col-form-label mt-2" for="txtItemLink">Item Link</label>
-                            <input type="text" class="form-control" placeholder="" id="txtItemLink">
+                        <div class="row">
+                            <div class="col-md-4" style="text-align:right;"><label class="col-form-label mt-2" for="txtItemLink">Item Link</label></div>
+                            <div class="col-md-8"><input type="text" class="form-control" placeholder="" id="txtItemLink"></div>
                         </div>
                     </div>
                     <div class="col-md-6">
