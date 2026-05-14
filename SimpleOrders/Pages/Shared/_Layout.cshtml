@@ -6,9 +6,10 @@
     <title>@ViewData["Title"] - Corner Bargins</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    
-
-    
+    @if (!ViewContext.HttpContext.Request.Host.ToString().Contains("localhost"))
+    {
+        <script src="//rum-static.pingdom.net/pa-6a0485934ee16c00120000a9.js" async></script>
+    }
     @Html.AntiForgeryToken()
 </head>
 <body class="bg-primary-subtle">
@@ -19,19 +20,22 @@
             </div>
             <div class="col-md-10" style="vertical-align:bottom; border:solid 0px red;">
                 <center>
-    
+                    
                 </center>
             </div>
         </div>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3" style="display:block;">
-            <div class="container">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3" style="display:block; border:solid 1px green;">
+            <div class="row">
+                <div class="col-md-9    " style="text-align:right; color:white;">Welcome and thank you so much for checking out our listings. Check back often, new inventory arrives weekly. </div>
+            </div>
+            <div class="container" style="border:solid 0px red;">
                 <a class="navbar-brand" asp-area="" asp-page="/Index" style="color:white; display:none;">Current Listing</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" style="border:solid 0px red;">
+                    <ul class="navbar-nav flex-grow-1" style="text-align:right;">
                         @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
