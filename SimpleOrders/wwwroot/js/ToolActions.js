@@ -134,7 +134,7 @@ function AddDroppedFile(event, itemID) {
     //dt.files.each(function (x) { alert(x.name); });
     $.each(dt.files, function (index, file) {
         //alert(file.name);
-        var fd = ne FormData();
+        var fd = new FormData();
         fd.append('files', file);
         fd.append('itemID', itemID)
 
