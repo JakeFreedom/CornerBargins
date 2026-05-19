@@ -26,12 +26,15 @@ namespace Core
 
                     case ENUMS.ImageType.HALF_SIZE: // 350x350
                          //imagesToReturn.Add(GetResizedImage(350, 350, originalImage));
-                        i.Add(ENUMS.ImageType.NORMAL, GetResizedImage(350,350, originalImage));
+                        i.Add(ENUMS.ImageType.HALF_SIZE, GetResizedImage(350,350, originalImage));
                         break;
 
                     case ENUMS.ImageType.THUMB_NAIL: // 200x200
                         //imagesToReturn.Add(GetResizedImage(200, 200, originalImage));
-                        i.Add(ENUMS.ImageType.NORMAL, GetResizedImage(200, 200, originalImage));
+                        i.Add(ENUMS.ImageType.THUMB_NAIL, GetResizedImage(200, 200, originalImage));
+                        break;
+                    case ENUMS.ImageType.ICON: //64x64
+                        i.Add(ENUMS.ImageType.ICON, GetResizedImage(64, 64, originalImage));
                         break;
                 }
             }

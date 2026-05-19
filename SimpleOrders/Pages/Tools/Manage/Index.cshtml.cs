@@ -21,7 +21,7 @@ namespace CB.Pages.Tools.Manage
 
         public void OnPostUpdateItem(int itemID)
         {
-            System.Diagnostics.Debug.WriteLine(itemID);
+            //System.Diagnostics.Debug.WriteLine(itemID);
             GetItems();
         }
 
@@ -38,12 +38,22 @@ namespace CB.Pages.Tools.Manage
             //We need both images. The full image and the resized image. So we need to do this twice.
 
 
+            MemoryStream ms = new MemoryStream();
+            files.CopyTo(ms);
             Item i = new Item(itemID);
-            byte[] newImage = i.GetResizedImage(350, 350);
+            byte[] newImage = i.GetFullImage(ms.ToArray(), 350, 350);
+
             //Resize the image
             //Tag the Image Type
             //Save the image to the DB
-            i.SaveImage(newImage);
+            //i.SaveImage(newImage);
+            if(Item.AddItemImages(newImage, itemID)){
+                System.Diagnostics.Debug.WriteLine("All Images saved");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Failed saving images");
+            }
 
         }
         public List<Item> Items { get; protected set; }

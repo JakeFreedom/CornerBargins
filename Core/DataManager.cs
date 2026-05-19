@@ -7,10 +7,10 @@ namespace Core
     {
 
         //Local Host -=- Office
-        //FileStream sr =  File.Open("d:\\Auth\\authcodes.txt", FileMode.Open,FileAccess.Read);
+        FileStream sr =  File.Open("d:\\Auth\\authcodes.txt", FileMode.Open,FileAccess.Read);
 
         //Home Build
-        FileStream sr = File.Open("e:\\Auth\\authcodes.txt", FileMode.Open, FileAccess.Read);
+        //FileStream sr = File.Open("e:\\Auth\\authcodes.txt", FileMode.Open, FileAccess.Read);
 
         //Dev Server -- Production
         //FileStream sr = File.Open("e:\\Auth\\authcodes.txt", FileMode.Open, FileAccess.Read);
@@ -118,19 +118,19 @@ namespace Core
 
         public T InsertDataProc<T>(string DBProc, List<SqlParameter>? ProcParameters = null)
         {
-            this.DBParameters = new List<SqlParameter>();
-            foreach(SqlParameter p in ProcParameters)
-            {
-                SqlParameter sqlParameter = new SqlParameter();
-                sqlParameter.Value = p.Value;
-                sqlParameter.ParameterName = p.ParameterName;
-                sqlParameter.DbType = p.DbType;
-                this.DBParameters.Add(sqlParameter);
+            //this.DBParameters = new List<SqlParameter>();
+            //foreach(SqlParameter p in ProcParameters)
+            //{
+            //    SqlParameter sqlParameter = new SqlParameter();
+            //    sqlParameter.Value = p.Value;
+            //    sqlParameter.ParameterName = p.ParameterName;
+            //    sqlParameter.DbType = p.DbType;
+            //    this.DBParameters.Add(sqlParameter);
 
-            }
+            //}
 
 
-            CreateCommand(DBProc, DBParameters);
+            CreateCommand(DBProc, ProcParameters);
             DBCmd.Connection.Open();
             SqlDataReader reader = DBCmd.ExecuteReader();
 

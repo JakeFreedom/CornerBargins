@@ -4,6 +4,7 @@
     {
         NORMAL,
         HALF_SIZE,
-        THUMB_NAIL
+        THUMB_NAIL,
+        ICON
     }
 }

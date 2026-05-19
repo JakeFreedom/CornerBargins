@@ -27,7 +27,7 @@ namespace Core
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("@intItemID", ID.ToString());
             dm.GetDataProc("Item_SBy_ID", parameters);
-            if(dm.RowsAffected>0)
+            if (dm.RowsAffected > 0)
             {
                 DataView dv = dm.GetDBDataAsDataView();
                 DataRowView drv = dv[0];
@@ -56,9 +56,11 @@ namespace Core
             this.Image = Image;
             this.Status = Status;
             this.Updated = LastUpdated;
+            //this.Images = new MediaCollection(ID); // Creates and load a media collection with all the images the item has.
+            //this.MediaCardImageIcons = new MediaCollection(ID, ENUMS.ImageType.ICON);
+
         }
 
-        //Get all items a user has access to.
         public static List<Item> GetItems()
         {
             List<Item> returnList = new List<Item>();
@@ -69,7 +71,7 @@ namespace Core
             {
                 DataTable dt = dm.DBData.Tables[0];
                 DataView dv = new DataView(dt);
-                foreach(DataRowView drv in dv)
+                foreach (DataRowView drv in dv)
                 {
                     Item i = new Item(Int32.Parse(drv["intID"].ToString()), drv["vcName"].ToString(), drv["vcDescription"].ToString(),
                         decimal.Parse(drv["decCost"].ToString()).ToString(), drv["vcExternalLink"].ToString(), Int32.Parse(drv["intStatus"].ToString()), (byte[])drv["binImage"],
@@ -77,7 +79,7 @@ namespace Core
 
                     returnList.Add(i);
                 }
-                
+
             }
 
             if (returnList.Count > 0)
@@ -122,7 +124,7 @@ namespace Core
             param.Add("intItemID", ID.ToString());
             dm.GetDataProc("Item_SFullImage", param);
 
-            if(dm.RowsAffected > 0)
+            if (dm.RowsAffected > 0)
             {
                 DataTable dt = dm.DBData.Tables[0];
                 DataView dv = new DataView(dt);
@@ -151,7 +153,7 @@ namespace Core
             return dm.InsertDataProc<int>("Item_I", sp);
         }
 
-        public static int UpdateItemImage(byte[] newImage, int itemID) 
+        public static int UpdateItemImage(byte[] newImage, int itemID)
         {
             DataManager dm = new DataManager();
             List<SqlParameter> sp = new List<SqlParameter>();
@@ -162,21 +164,36 @@ namespace Core
             return dm.InsertDataProc<int>("Item_U", sp);
         }
 
-        public static void AddItemImages(byte[] itemImage, int itemID)
+        public static Boolean AddItemImages(byte[] itemImage, int itemID)
         {
             List<ENUMS.ImageType> imageTypes = new List<ENUMS.ImageType>();
-            imageTypes.Add(ENUMS.ImageType.NORMAL);
-            imageTypes.Add(ENUMS.ImageType.HALF_SIZE);
-            imageTypes.Add(ENUMS.ImageType.THUMB_NAIL);
+            //imageTypes.Add(ENUMS.ImageType.NORMAL);
+            //imageTypes.Add(ENUMS.ImageType.HALF_SIZE);
+            //imageTypes.Add(ENUMS.ImageType.THUMB_NAIL);
+            imageTypes.Add(ENUMS.ImageType.ICON);
             Dictionary<ENUMS.ImageType, byte[]> images = Core.Utilities.CreateItemImages(itemImage, imageTypes);
+            Boolean allImagesSaved = true;
             //Iterate of the dictionary and save each image to the DB in the Binary Media table
-            for (int i = 0; i < images.Count; i++)
+            //System.Diagnostics.Debug.Write(images[ENUMS.ImageType.NORMAL]);
+            foreach (KeyValuePair<ENUMS.ImageType, byte[]> key in images)
             {
 
-                System.Diagnostics.Debug.Write(images.Keys);
+                //System.Diagnostics.Debug.WriteLine($"Key:{key.Key} Value:{key.Value}");
+                DataManager dm = new DataManager();
+                List<SqlParameter> sp = new List<SqlParameter>();
+                sp.Add(new SqlParameter("binImage", key.Value));
+                sp.Add(new SqlParameter("intItemID", itemID));
+                sp.Add(new SqlParameter("intImageType", (int)key.Key));
+                sp.Add(new SqlParameter("intFileSize", key.Value.Length));
 
 
+                if (dm.InsertDataProc<int>("AddItemImages", sp) != itemID) {
+                    allImagesSaved = false;
+                    break;
+                }
             }
+
+            return allImagesSaved;
         }
 
 
@@ -201,11 +218,11 @@ namespace Core
 
             b = new Bitmap(i, _width, _height);
 
-            
-            Image myThumbnail = b.GetThumbnailImage(_width,_height, myCallback, IntPtr.Zero);
+
+            Image myThumbnail = b.GetThumbnailImage(_width, _height, myCallback, IntPtr.Zero);
             //myThumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-       
+
             myThumbnail.Save($"C:\\pwp\\{this.Name}.png");
 
             //return ms.ToArray();
@@ -241,10 +258,10 @@ namespace Core
 
 
         public int ID { get; protected set; }
-        public string? Name { get; protected set; }    
+        public string? Name { get; protected set; }
         public string? Description { get; protected set; }
-       
-       public byte[] Image { get; protected set; }
+
+        public byte[] Image { get; protected set; }
 
         public string Cost { get; protected set; }
         public string Link { get; protected set; }
@@ -252,5 +269,10 @@ namespace Core
         public string GUID { get; protected set; }
         public DateTime Created { get; protected set; }
         public DateTime Updated { get; protected set; }
+        public MediaCollection Images { get; protected set; }
+        public MediaCollection MediaCardImageIcons
+        {
+            get{ return new MediaCollection(this.ID, ENUMS.ImageType.ICON); }
+        }
     }
 }
