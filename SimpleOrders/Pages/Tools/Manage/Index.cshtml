@@ -113,8 +113,8 @@
                                                                 imageIndex++; *@
                                                             }
 
-                                                    <div class="col-md-4 p-1 m-1" style="border:1px solid yellow; height:64px; width:64px;" ondragover="FileDropAreaEntered(event)" ondrop="AddDroppedFile(event, @item.ID)"; draggable="true"></div>
-                                                    <div class="col-md-4 p-1 m-1" style="border:1px solid cyan; height:64px; width:64px;" ondragover="FileDropAreaEntered(event)" ondrop="AddDroppedFile(event, @item.ID)"; draggable="true"></div>
+                                                    <div class="col-md-4 p-1 m-1" style="border:1px solid yellow; height:64px; width:64px;" ondragover="FileDropAreaEntered(event)" ondrop="AddDroppedFile(event, @item.ID,1)"; draggable="true"></div>
+                                                    <div class="col-md-4 p-1 m-1" style="border:1px solid cyan; height:64px; width:64px;" ondragover="FileDropAreaEntered(event)" ondrop="AddDroppedFile(event, @item.ID, 1)"; draggable="true"></div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -181,7 +181,7 @@
             <div class="modal-body">
                 <form enctype="multipart/form-data" method="post" id="frmImageUpload">
                     <div id="divFilesToUpload">
-                        <input type="file" id="userFile" name="userFile" />
+                        <input type="file" id="userFile" name="userFile" multiple/>
                     </div>
                     <input type="button" value="Save" onclick="UploadImage()" />
                 </form>

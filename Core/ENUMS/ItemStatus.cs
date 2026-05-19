@@ -11,6 +11,7 @@ namespace Core.ENUMS
         ITEM_VISIBLE = 1,
         ITEM_OBSOLETE = 2,
         ITEM_SUPERSEDED = 4,
-        ITEM_LOCKED = 8
+        ITEM_LOCKED = 8,
+        ITEM_SOLD = 16
     }
 }

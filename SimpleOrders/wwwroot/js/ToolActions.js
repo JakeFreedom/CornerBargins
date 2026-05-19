@@ -18,8 +18,9 @@
     //Well use this to create a new type file entry so the user can drop 
     $("#userFile").on('drop', (e) => {
         var fileInput = document.getElementById('userFile');
-        alert(fileInput.files);
-        console.log(fileInput.files);
+        //alert(fileInput.files.count);
+        console.log(fileInput.files[0]);
+        console.log(e.dataTransfer);
     });
 
 });
@@ -125,10 +126,10 @@ function FileDropAreaEntered(event) {
 
 
 
-function AddDroppedFile(event, itemID) {
+function AddDroppedFile(event, itemID, imageType) {
     event.preventDefault();
     event.stopPropagation();
-    alert(itemID);
+    //alert(itemID);
     var dt = event.dataTransfer;
     alert(dt.files.length);
     //dt.files.each(function (x) { alert(x.name); });
@@ -136,7 +137,8 @@ function AddDroppedFile(event, itemID) {
         //alert(file.name);
         var fd = new FormData();
         fd.append('files', file);
-        fd.append('itemID', itemID)
+        fd.append('itemID', itemID);
+        fd.append('imageType', imageType);
 
         $.ajax({
             method: "POST",

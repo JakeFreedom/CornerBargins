@@ -33,11 +33,17 @@ namespace CB.Pages.Tools.Manage
             OnGet();
         }
 
-        public void OnPostAddImage(IFormFile files, int itemID)
+        public void OnPostAddImage(IFormFile files, int itemID, int imageType)
         {
+            //We need both images. The full image and the resized image. So we need to do this twice.
+
+
+            Item i = new Item(itemID);
+            byte[] newImage = i.GetResizedImage(350, 350);
             //Resize the image
             //Tag the Image Type
             //Save the image to the DB
+            i.SaveImage(newImage);
 
         }
         public List<Item> Items { get; protected set; }

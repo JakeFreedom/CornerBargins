@@ -23,7 +23,26 @@ namespace Core
         /// <param name="ID"></param>
         public Item(int ID) {
 
-            
+            DataManager dm = new DataManager();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("@intItemID", ID.ToString());
+            dm.GetDataProc("Item_SBy_ID", parameters);
+            if(dm.RowsAffected>0)
+            {
+                DataView dv = dm.GetDBDataAsDataView();
+                DataRowView drv = dv[0];
+
+                this.ID = ID;
+                this.Name = drv["vcName"].ToString();
+                this.Description = drv["vcDescription"].ToString();
+                this.Cost = decimal.Parse(drv["decCost"].ToString()).ToString();
+                this.Link = drv["vcExternalLink"].ToString();
+                this.Image = (byte[])drv["binImage"];
+                this.Status = Int32.Parse(drv["intStatus"].ToString());
+                this.Updated = DateTime.Parse(drv["dtUpdated"].ToString());
+                this.GUID = drv["GUID"].ToString();
+            }
+
 
         }
 
@@ -143,6 +162,23 @@ namespace Core
             return dm.InsertDataProc<int>("Item_U", sp);
         }
 
+        public static void AddItemImages(byte[] itemImage, int itemID)
+        {
+            List<ENUMS.ImageType> imageTypes = new List<ENUMS.ImageType>();
+            imageTypes.Add(ENUMS.ImageType.NORMAL);
+            imageTypes.Add(ENUMS.ImageType.HALF_SIZE);
+            imageTypes.Add(ENUMS.ImageType.THUMB_NAIL);
+            Dictionary<ENUMS.ImageType, byte[]> images = Core.Utilities.CreateItemImages(itemImage, imageTypes);
+            //Iterate of the dictionary and save each image to the DB in the Binary Media table
+            for (int i = 0; i < images.Count; i++)
+            {
+
+                System.Diagnostics.Debug.Write(images.Keys);
+
+
+            }
+        }
+
 
         private bool ThumbnailCallback() { return false; }
         public byte[] GetResizedImage(int maxHeight, int maxWidth)
@@ -213,6 +249,7 @@ namespace Core
         public string Cost { get; protected set; }
         public string Link { get; protected set; }
         public int Status { get; protected set; } //Double as to what the label color will be
+        public string GUID { get; protected set; }
         public DateTime Created { get; protected set; }
         public DateTime Updated { get; protected set; }
     }

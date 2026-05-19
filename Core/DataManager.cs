@@ -10,10 +10,10 @@ namespace Core
         //FileStream sr =  File.Open("d:\\Auth\\authcodes.txt", FileMode.Open,FileAccess.Read);
 
         //Home Build
-        //FileStream sr = File.Open("e:\\Auth\\authcodes.txt", FileMode.Open, FileAccess.Read);
+        FileStream sr = File.Open("e:\\Auth\\authcodes.txt", FileMode.Open, FileAccess.Read);
 
         //Dev Server -- Production
-        FileStream sr = File.Open("e:\\Auth\\authcodes.txt", FileMode.Open, FileAccess.Read);
+        //FileStream sr = File.Open("e:\\Auth\\authcodes.txt", FileMode.Open, FileAccess.Read);
 
         //private string msSqlServer = "webserver-1.alkota.com\\AlkotaCS"; //New Production database server
         private string msSqlServer = "webdev-1.alkota.com\\SqlWebDev"; // Dev server
