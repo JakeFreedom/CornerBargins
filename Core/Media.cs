@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -81,7 +82,8 @@ namespace Core
 			}
 		}
 
-		public MediaCollection(int itemID, ENUMS.ImageType imageType){
+		public MediaCollection(int itemID, ENUMS.ImageType imageType)
+		{
 
 			DataManager dm = new DataManager();
 			Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -106,6 +108,47 @@ namespace Core
 				}
 			}
 		}
+
+		//Get all media of a type
+		public MediaCollection(ENUMS.ImageType imageType) 
+		{
+			DataManager dm = new DataManager();
+			Dictionary<string, string> parameters = new Dictionary<string, string>();
+			parameters.Add("@intImageType", ((int)imageType).ToString());
+
+			dm.GetDataProc("Media_SBy_ImageType", parameters);
+			if (dm.RowsAffected > 0)
+			{
+				DataView dv = dm.GetDBDataAsDataView();
+				if (dv.Count > 0)
+				{
+					foreach (DataRowView drv in dv)
+					{
+						Media m = new Media(Int32.Parse(drv["intID"].ToString()), (byte[])drv["binImage"], (int)imageType, Int32.Parse(drv["intFileSize"].ToString()), "", DateTime.Parse(drv["dtCreated"].ToString()), DateTime.Parse(drv["dtUpdated"].ToString()), drv["itemGUID"].ToString());
+
+						this.List.Add(m);
+					}
+				}
+			}
+		
+		}
 		public MediaCollection(Media m) { }
+
+		public int GetCount()
+		{
+			return this.List.Count;
+		}
+
+		public List<Media> GetMediaByItemGUID(string GUID)
+		{
+			List<Media> returnMedia = new List<Media>();
+			foreach (Media m in this.List)
+			{
+				if (m.ItemGUID == GUID)
+					returnMedia.Add(m);
+			}
+
+			return returnMedia;
+		}
 	}
 }

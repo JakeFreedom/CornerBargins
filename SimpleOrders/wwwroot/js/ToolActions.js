@@ -26,10 +26,13 @@
 });
 
 
+//Basically what it says.
+//Show the Add Item Modal on the Tools/Manage Page
 function ShowAddItemModal() {
     $("#mdlAddItem").modal('show');
 }
 
+//This is called from the Tools/Manage page modal to add a new item
 function UploadImage() {
     var token = $("input[name='__RequestVerificationToken']").val();
     
@@ -61,7 +64,7 @@ function UploadImage() {
         {
             method: "POST",
             headers: { "RequestVerificationToken": token },
-            url: "AddItems/Index?handler=UploadMedia",
+            url: "AddItems/Index?handler=UploadMedia",//Why are we doing this
             data: fd,
             datatype: "text",
             contentType: false,
@@ -77,9 +80,7 @@ function UploadImage() {
         });
 }
 
-
-
-
+//This isn't called yet
 function UpdateItem(itemID) {
     var visCheckBox = "#chkItemVisible-" + itemID;
     var showResButton = "#chkShowResButton-" + itemID;
@@ -111,12 +112,12 @@ function UpdateItem(itemID) {
 
 }
 
+//This seems like a generic function to show/hide a div
 function ShowDiv(target) {
 
     $(target).toggleClass('collapse');
         
 }
-
 
 //Drag Drop Files to upload
 //Not 100% sure what this is doing
@@ -124,8 +125,7 @@ function FileDropAreaEntered(event) {
     event.preventDefault();
 }
 
-
-
+//This is callled fro the colored boxed on the Edit Items Tools/Manage accordian
 function AddDroppedFile(event, itemID, imageType) {
     event.preventDefault();
     event.stopPropagation();
@@ -161,7 +161,12 @@ function AddDroppedFile(event, itemID, imageType) {
     
 
 }
+
+
 //This will need to be modified for multiple files
+//This is the other area when you expand an item
+//We need to use this as the main image all the time
+// The other boxes, will be icon images, but will still need a full image
 function UploadDroppedFiles(event, itemID, binImage, binImageID) {
     event.preventDefault();
     event.stopPropagation();

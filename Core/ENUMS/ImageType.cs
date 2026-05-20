@@ -2,9 +2,9 @@
 {
     public enum ImageType
     {
-        NORMAL,
-        HALF_SIZE,
-        THUMB_NAIL,
-        ICON
+        NORMAL, // Full Sized
+        HALF_SIZE, // 350x350
+        THUMB_NAIL, // 200x200
+        ICON // 64x64
     }
 }

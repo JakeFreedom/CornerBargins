@@ -46,7 +46,7 @@ namespace Core
 
         }
 
-        public Item(int ID, string Name, string Description, string Cost, string Link, int Status, byte[] Image, DateTime LastUpdated)
+        public Item(int ID, string Name, string Description, string Cost, string Link, int Status, byte[] Image, DateTime LastUpdated, string GUID)
         {
             this.ID = ID;
             this.Name = Name;
@@ -56,6 +56,7 @@ namespace Core
             this.Image = Image;
             this.Status = Status;
             this.Updated = LastUpdated;
+            this.GUID = GUID;
             //this.Images = new MediaCollection(ID); // Creates and load a media collection with all the images the item has.
             //this.MediaCardImageIcons = new MediaCollection(ID, ENUMS.ImageType.ICON);
 
@@ -75,7 +76,7 @@ namespace Core
                 {
                     Item i = new Item(Int32.Parse(drv["intID"].ToString()), drv["vcName"].ToString(), drv["vcDescription"].ToString(),
                         decimal.Parse(drv["decCost"].ToString()).ToString(), drv["vcExternalLink"].ToString(), Int32.Parse(drv["intStatus"].ToString()), (byte[])drv["binImage"],
-                        DateTime.Parse(drv["dtUpdated"].ToString()));
+                        DateTime.Parse(drv["dtUpdated"].ToString()), drv["GUID"].ToString());
 
                     returnList.Add(i);
                 }
@@ -103,7 +104,7 @@ namespace Core
                 {
                     Item i = new Item(Int32.Parse(drv["intID"].ToString()), drv["vcName"].ToString(), drv["vcDescription"].ToString(),
                         decimal.Parse(drv["decCost"].ToString()).ToString(), drv["vcExternalLink"].ToString(), Int32.Parse(drv["intStatus"].ToString()), null,
-                        DateTime.Parse(drv["dtUpdated"].ToString()));
+                        DateTime.Parse(drv["dtUpdated"].ToString()), drv["GUID"].ToString());
 
                     returnList.Add(i);
                 }
@@ -167,9 +168,9 @@ namespace Core
         public static Boolean AddItemImages(byte[] itemImage, int itemID)
         {
             List<ENUMS.ImageType> imageTypes = new List<ENUMS.ImageType>();
-            //imageTypes.Add(ENUMS.ImageType.NORMAL);
-            //imageTypes.Add(ENUMS.ImageType.HALF_SIZE);
-            //imageTypes.Add(ENUMS.ImageType.THUMB_NAIL);
+            imageTypes.Add(ENUMS.ImageType.NORMAL);
+            imageTypes.Add(ENUMS.ImageType.HALF_SIZE);
+            imageTypes.Add(ENUMS.ImageType.THUMB_NAIL);
             imageTypes.Add(ENUMS.ImageType.ICON);
             Dictionary<ENUMS.ImageType, byte[]> images = Core.Utilities.CreateItemImages(itemImage, imageTypes);
             Boolean allImagesSaved = true;
