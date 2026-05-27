@@ -64,7 +64,7 @@ function UploadImage() {
         {
             method: "POST",
             headers: { "RequestVerificationToken": token },
-            url: "AddItems/Index?handler=UploadMedia",//Why are we doing this
+            url: "Manage/Index?handler=UploadMedia",//Why are we doing this
             data: fd,
             datatype: "text",
             contentType: false,
